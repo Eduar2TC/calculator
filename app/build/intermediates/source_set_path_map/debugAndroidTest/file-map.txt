@@ -1,0 +1,4 @@
+com.eduar2tc.calculator.test.app-androidTest-0 C:\Users\eduar\AndroidStudioProjects\Calculator\app\build\generated\res\resValues\androidTest\debug
+com.eduar2tc.calculator.test.app-mergeDebugAndroidTestResources-1 C:\Users\eduar\AndroidStudioProjects\Calculator\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.eduar2tc.calculator.test.app-mergeDebugAndroidTestResources-2 C:\Users\eduar\AndroidStudioProjects\Calculator\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.eduar2tc.calculator.test.app-merged_res-3 C:\Users\eduar\AndroidStudioProjects\Calculator\app\build\intermediates\merged_res\debugAndroidTest

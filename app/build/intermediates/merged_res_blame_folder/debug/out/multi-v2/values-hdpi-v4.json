@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.eduar2tc.calculator.app-mergeDebugResources-26:/values-hdpi-v4/values-hdpi-v4.xml",
+            "map": [
+                {
+                    "source": "/Users/edu/.gradle/caches/transforms-3/7cd62fbeaff0c5f12b3f92c2436fef49/transformed/appcompat-1.5.0/res/values-hdpi-v4/values-hdpi-v4.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "13",
+                        "endOffsets": "327"
+                    }
+                }
+            ]
+        }
+    ]
+}

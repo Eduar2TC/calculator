@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.eduar2tc.calculator.app-mergeDebugResources-26:/values-es-rMX/values-es-rMX.xml",
+            "map": [
+                {
+                    "source": "/Users/edu/AndroidStudioProjects/Calculator/app/src/main/res/values-es-rMX/strings.xml",
+                    "from": {
+                        "startLines": "9,2,4,3,8,7,10,6,5",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "434,55,162,104,377,323,490,270,211",
+                        "endColumns": "55,48,48,57,56,53,75,52,58",
+                        "endOffsets": "485,99,206,157,429,372,561,318,265"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,111,160,209,267,324,378,454,507",
+                        "endColumns": "55,48,48,57,56,53,75,52,58",
+                        "endOffsets": "106,155,204,262,319,373,449,502,561"
+                    }
+                }
+            ]
+        }
+    ]
+}

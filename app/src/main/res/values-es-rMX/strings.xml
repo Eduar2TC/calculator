@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calculadora</string>
+    <string name="item_select_theme">Elegir tema</string>
+    <string name="item_about">Acerca de</string>
+    <string name="theme_dialog_title">Elegir tema</string>
+    <string name="theme_dialog_light">Claro</string>
+    <string name="theme_dialog_dark">Obscuro</string>
+    <string name="theme_dialog_cancel">Cancelar</string>
+    <string name="about_dialog_accept">Aceptar</string>
+    <string name="theme_dialog_default">Predeterminado del sistema</string>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Calculator</string>
+    <string name="item_select_theme">Select theme</string>
+    <string name="item_about">About</string>
+    <string name="theme_dialog_title">Select theme</string>
+    <string name="theme_dialog_light">Light</string>
+    <string name="theme_dialog_dark">Dark</string>
+    <string name="theme_dialog_default">Default</string>
+    <string name="theme_dialog_cancel">Cancel</string>
+    <string name="about_dialog_accept">Accept</string>
+</resources>
