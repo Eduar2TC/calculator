@@ -42,6 +42,7 @@ public class PerformOperations {
     public static void performEqualOperation(EditText editText, TextView textViewResult) {
         String result = PerformOperations.performOperation(editText.getText().toString());
         textViewResult.setText(result);
+        editText.setTextSize(70f); //reset font size
     }
     public static void appendOperation(EditText editText, String operation) {
         editText.append(operation);

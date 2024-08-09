@@ -9,6 +9,7 @@
     <color name="texColorButton">#1a2225</color>
     <color name="textViewBg">#232b2e</color>
     <color name="text_view_color">#a4c2fc</color>
+    <string name="privacy_policy_dialog_title">Privacy Policy</string>
     <style name="DialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="android:background">@drawable/dialog_bg</item>
         <item name="color">@color/dialog_bg_night</item>

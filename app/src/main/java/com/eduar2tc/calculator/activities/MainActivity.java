@@ -13,7 +13,6 @@ import android.text.InputFilter;
 import android.text.Selection;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.eduar2tc.calculator.utils.CustomDialog;
+import com.eduar2tc.calculator.utils.CustomThemeDialog;
 import com.eduar2tc.calculator.utils.InputFormat;
 import com.eduar2tc.calculator.utils.PerformOperations;
 import com.eduar2tc.calculator.R;
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        new CustomDialog(MainActivity.this).onOptionsItemSelected(item, MainActivity.this);
+        new CustomThemeDialog(MainActivity.this).onOptionsItemSelected(item, MainActivity.this);
         return super.onOptionsItemSelected(item);
     }
     @SuppressLint("ClickableViewAccessibility")

@@ -22,6 +22,7 @@ color toolbarBg
 color white
 drawable border_texview
 drawable button_mask
+drawable custom_cursor
 drawable dialog_bg
 drawable ic_backspace
 drawable ic_launcher_background
@@ -63,6 +64,13 @@ string about_dialog_accept
 string app_name
 string item_about
 string item_select_theme
+string privacy_policy_app_not_found
+string privacy_policy_content
+string privacy_policy_dialog_accept
+string privacy_policy_dialog_contact
+string privacy_policy_dialog_email_body
+string privacy_policy_dialog_email_subject
+string privacy_policy_dialog_title
 string theme_dialog_cancel
 string theme_dialog_dark
 string theme_dialog_default

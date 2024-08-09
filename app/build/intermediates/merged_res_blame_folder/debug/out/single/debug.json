@@ -1,102 +1,102 @@
 [
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/drawable_button_mask.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/drawable/button_mask.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/drawable_custom_cursor.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/drawable/custom_cursor.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/drawable_ic_overflow_icon.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/drawable/ic_overflow_icon.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/drawable-v24/ic_launcher_foreground.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/layout_activity_main.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/layout/activity_main.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/layout_activity_main.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/layout/activity_main.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/drawable/ic_launcher_background.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/xml_data_extraction_rules.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/xml/data_extraction_rules.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/drawable_dialog_bg.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/drawable/dialog_bg.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/menu_menu.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/menu/menu.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/xml_backup_rules.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/xml/backup_rules.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/drawable_border_texview.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/drawable/border_texview.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/xml_data_extraction_rules.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "com.eduar2tc.calculator.app-merged_res-28:/layout_activity_main.xml.flat",
-        "source": "com.eduar2tc.calculator.app-main-30:/layout/activity_main.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/drawable_ic_launcher_background.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/drawable/ic_launcher_background.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/drawable_dialog_bg.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/drawable/dialog_bg.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/drawable_border_texview.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/drawable/border_texview.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/xml_backup_rules.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/xml/backup_rules.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/menu_menu.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/menu/menu.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/drawable-v24_ic_launcher_foreground.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/drawable-v24/ic_launcher_foreground.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/drawable_overflow_menu.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/drawable/overflow_menu.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/drawable_ic_backspace.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/drawable/ic_backspace.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/drawable_ic_overflow_icon.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/drawable/ic_overflow_icon.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/drawable_ic_backspace.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/drawable/ic_backspace.xml"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/drawable_overflow_menu.xml.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/drawable/overflow_menu.xml"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-merged_res-28:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "/Users/edu/.gradle/daemon/8.2/com.eduar2tc.calculator.app-main-30:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "com.eduar2tc.calculator.app-merged_res-31:/drawable_button_mask.xml.flat",
+        "source": "com.eduar2tc.calculator.app-main-33:/drawable/button_mask.xml"
     }
 ]

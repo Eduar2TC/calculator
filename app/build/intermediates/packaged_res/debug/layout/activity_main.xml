@@ -13,13 +13,13 @@
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:background="@color/textViewBg"
-        android:weightSum="1"
         android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintBottom_toTopOf="@+id/operator0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
@@ -37,7 +37,7 @@
                 android:ellipsize="end"
                 android:inputType="text"
                 android:maxLines="1"
-                android:paddingEnd="2dp"
+                android:paddingEnd="18dp"
                 android:textAlignment="textEnd"
                 android:textColor="@color/edit_text_color"
                 android:textSize="70sp"
@@ -45,6 +45,8 @@
                 app:autoSizeMinTextSize="1sp"
                 app:autoSizeStepGranularity="1sp"
                 app:autoSizeTextType="uniform"
+                android:textCursorDrawable="@drawable/custom_cursor"
+
                 />
         </HorizontalScrollView>
 
@@ -56,9 +58,9 @@
             android:layout_weight="0.50"
             android:background="@color/textViewBg"
             android:clickable="false"
+            android:paddingEnd="18dp"
             android:textAlignment="textEnd"
             android:textColor="@color/text_view_color"
-            android:paddingEnd="1dp"
             android:textSize="38sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -9,4 +9,11 @@
     <string name="theme_dialog_cancel">Cancelar</string>
     <string name="about_dialog_accept">Aceptar</string>
     <string name="theme_dialog_default">Predeterminado del sistema</string>
+    <string name="privacy_policy_dialog_title">Política de Privacidad </string>
+    <string name="privacy_policy_content"> Esto es cool </string>
+    <string name="privacy_policy_dialog_accept">Aceptar</string>
+    <string name="privacy_policy_dialog_contact">Contacto</string>
+    <string name="privacy_policy_dialog_email_subject">Subject of the email</string>
+    <string name="privacy_policy_dialog_email_body">Cuerpo del email</string>
+    <string name="privacy_policy_app_not_found">App no encontrada</string>
 </resources>

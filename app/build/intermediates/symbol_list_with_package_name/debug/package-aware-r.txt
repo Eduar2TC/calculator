@@ -1219,6 +1219,8 @@ color btnRightBgButtons
 color btnRightTextColor
 color button_material_dark
 color button_material_light
+color call_notification_answer_color
+color call_notification_decline_color
 color cardview_dark_background
 color cardview_light_background
 color cardview_shadow_end_color
@@ -2467,6 +2469,7 @@ drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable button_mask
+drawable custom_cursor
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
@@ -2474,6 +2477,12 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable dialog_bg
 drawable ic_backspace
+drawable ic_call_answer
+drawable ic_call_answer_low
+drawable ic_call_answer_video
+drawable ic_call_answer_video_low
+drawable ic_call_decline
+drawable ic_call_decline_low
 drawable ic_clock_black_24dp
 drawable ic_keyboard_black_24dp
 drawable ic_launcher_background
@@ -2523,6 +2532,7 @@ drawable notification_bg_low_pressed
 drawable notification_bg_normal
 drawable notification_bg_normal_pressed
 drawable notification_icon_background
+drawable notification_oversize_large_icon_bg
 drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
@@ -2722,6 +2732,7 @@ id easeOut
 id east
 id editText
 id edit_query
+id edit_text_id
 id edittext_dropdown_editable
 id edittext_dropdown_noneditable
 id elastic
@@ -2759,6 +2770,7 @@ id grouping
 id groups
 id guideline
 id header_title
+id hide_ime_id
 id hideable
 id home
 id homeAsUp
@@ -2900,6 +2912,7 @@ id progress_horizontal
 id radio
 id ratio
 id rectangles
+id report_drawn
 id reverseSawtooth
 id right
 id rightToLeft
@@ -3153,6 +3166,8 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout ime_base_split_test_activity
+layout ime_secondary_split_test_activity
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
@@ -3264,6 +3279,13 @@ string app_name
 string appbar_scrolling_view_behavior
 string bottom_sheet_behavior
 string bottomsheet_action_expand_halfway
+string call_notification_answer_action
+string call_notification_answer_video_action
+string call_notification_decline_action
+string call_notification_hang_up_action
+string call_notification_incoming_text
+string call_notification_ongoing_text
+string call_notification_screening_text
 string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern
@@ -3355,6 +3377,13 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string privacy_policy_app_not_found
+string privacy_policy_content
+string privacy_policy_dialog_accept
+string privacy_policy_dialog_contact
+string privacy_policy_dialog_email_body
+string privacy_policy_dialog_email_subject
+string privacy_policy_dialog_title
 string search_menu_title
 string status_bar_notification_info_overflow
 string theme_dialog_cancel

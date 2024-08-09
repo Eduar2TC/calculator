@@ -26,14 +26,17 @@
     <style name="overflow_menu" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:popupBackground">@drawable/overflow_menu</item>
         <item name="android:textColor">@color/material_dynamic_primary40</item>
+        <item name="android:dropDownHorizontalOffset">-16dp</item>
+        <item name="android:dropDownVerticalOffset">16dp</item>
     </style>
     <!-- Tool bar -->
     <style name="toolbar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:background">@color/toolbarBg</item>
     </style>
     <!---Height action bar-->
-    <style name="action_bar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="action_bar" parent="Theme.MaterialComponents.DayNight.DarkActionBar" >
         <item name="height">35dp</item>
+
     </style>
     <!-- Dialog style -->
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
