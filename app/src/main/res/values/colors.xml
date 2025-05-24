@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <!--App Light colors -->
+    <color name="textViewBg">#232b2e</color>
+    <color name="edit_text_color">#e9f1f4</color>
+    <color name="text_view_color">#fccfc7</color>
+    <color name="bgButtons">#f2f8f8</color>
+    <color name="btnBgTopButtons">#e1ebec</color>
+    <color name="btnRightBgButtons">#f24032</color>
+    <color name="texColorButton">#1a2225</color>
+    <color name="btnRightTextColor">#ffeed1</color>
+    <color name="popupBg">#2E383C</color>
+    <color name="dialog_bg_night">#2E383C</color>
+    <color name="dialog_bg_light">@color/white</color>
+    <color name="toolbar_bg">#232b2e</color>
+    <color name="status_app_bar_bg" >#232b2e</color>
+    <color name="ripple_color">#80FFFFFF</color>
+
+
+</resources>

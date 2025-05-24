@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Calculadora</string>
+    <string name="item_select_theme">Elegir tema</string>
+    <string name="item_about">Acerca de</string>
+    <string name="item_settings">Ajustes</string>
+    <string name="theme_dialog_title">Elegir tema</string>
+    <string name="theme_dialog_light">Claro</string>
+    <string name="theme_dialog_dark">Obscuro</string>
+    <string name="theme_dialog_cancel">Cancelar</string>
+    <string name="about_dialog_accept">Aceptar</string>
+    <string name="theme_dialog_default">Predeterminado del sistema</string>
+    <string name="privacy_policy_dialog_title">Política de Privacidad </string>
+    <string name="privacy_policy_content"> Esto es cool </string>
+    <string name="privacy_policy_dialog_accept">Aceptar</string>
+    <string name="privacy_policy_dialog_contact">Contacto</string>
+    <string name="privacy_policy_dialog_email_subject">Subject of the email</string>
+    <string name="privacy_policy_dialog_email_body">Cuerpo del email</string>
+    <string name="privacy_policy_app_not_found">App no encontrada</string>
+    <string name="privacy_policy_html" tools:ignore="TypographyDashes">
+        <![CDATA[
+        <html>
+            <body>
+            <h2>Política de Privacidad</h2>
+            <p>[Nombre del Individuo o Empresa] construyó la aplicación [Nombre de la Aplicación] como una aplicación [de código abierto | gratuita | freemium | con publicidad | comercial]. Este SERVICIO es proporcionado por [Nombre del Individuo o Empresa] [sin costo] y está destinado para su uso tal como está.</p>
+            <p>Esta página se utiliza para informar a los visitantes del sitio web sobre [mis|nuestras] políticas con respecto a la recopilación, uso y divulgación de Información Personal si alguien decide usar [mi|nuestro] Servicio.</p>
+            <p>Si elige usar [mi|nuestro] Servicio, entonces acepta la recopilación y el uso de información en relación con esta política. La Información Personal que [yo|nosotros] recopilamos se utiliza para proporcionar y mejorar el Servicio. [Yo|Nosotros] no utilizaremos ni compartiremos su información con nadie excepto como se describe en esta Política de Privacidad.</p>
+            <p>Los términos utilizados en esta Política de Privacidad tienen los mismos significados que en nuestros Términos y Condiciones, que son accesibles en [Nombre de la Aplicación], a menos que se definan de otra manera en esta Política de Privacidad.</p>
+
+            <p><strong>Recopilación y Uso de Información</strong></p>
+            <p>Para una mejor experiencia mientras usa nuestro Servicio, [yo|nosotros] podemos requerirle que nos proporcione cierta información de identificación personal, incluyendo pero no limitado a [agregue lo que recopila aquí, por ejemplo, nombre del usuario | dirección | ubicación | fotos]. La información que [yo|nosotros] solicitamos es [retenida en su dispositivo y no es recopilada por [mí|nosotros] de ninguna manera]|[será retenida por nosotros y utilizada como se describe en esta política de privacidad.</p>
+            <p>La aplicación utiliza servicios de terceros que pueden recopilar información utilizada para identificarle. [Puede mencionar los servicios de Google aquí y enlazar a la política de privacidad de Google si lo desea].
+
+            <p><strong>Datos de Registro</strong></p>
+            <p>[Yo|Nosotros] queremos informarle que siempre que use [mi|nuestro] Servicio, en caso de un error en la aplicación [yo|nosotros] recopilamos datos e información (a través de productos de terceros) en su teléfono llamada Datos de Registro. Estos Datos de Registro pueden incluir información como la dirección de Protocolo de Internet (\"IP\") de su dispositivo, nombre del dispositivo, versión del sistema operativo, configuración de la aplicación al utilizar [mi|nuestro] Servicio, la hora y fecha de su uso del Servicio, y otras estadísticas.</p>
+
+            <p><strong>Cookies</strong></p>
+            <p>Las cookies son archivos con una pequeña cantidad de datos que se utilizan comúnmente como un identificador único anónimo. Estos son enviados a su navegador desde el sitio web que visita y se almacenan en la memoria interna de su dispositivo.</p>
+            <p>!— Verifique si esto es cierto para su aplicación, si no está seguro, simplemente asuma que usa cookies y modifique esta siguiente línea --> Este Servicio no utiliza estas “cookies” explícitamente. Sin embargo, la aplicación puede usar código y bibliotecas de terceros que usan “cookies” para recopilar información y mejorar sus servicios. Usted tiene la opción de aceptar o rechazar estas cookies, y saber cuándo se está enviando una cookie a su dispositivo. Si elige rechazar nuestras cookies, es posible que no pueda usar algunas partes de este Servicio.</p>
+
+            <p><strong>Proveedores de Servicios</strong></p> <!-- Esta parte puede parecer que no es necesaria, pero si usa algún servicio de Google, o cualquier otra biblioteca de terceros, es probable que necesite esto. -->
+            <p>[Yo|Nosotros] podemos emplear empresas e individuos de terceros por las siguientes razones:</p>
+            <ul>
+                <li>Para facilitar nuestro Servicio;</li>
+                <li>Para proporcionar el Servicio en nuestro nombre;</li>
+                <li>Para realizar servicios relacionados con el Servicio; o</li>
+                <li>Para ayudarnos a analizar cómo se utiliza nuestro Servicio.</li>
+            </ul>
+            <p>[Yo|Nosotros] queremos informar a los usuarios de este Servicio que estos terceros tienen acceso a su Información Personal. La razón es para realizar las tareas asignadas a ellos en nuestro nombre. Sin embargo, están obligados a no divulgar o utilizar la información para ningún otro propósito.</p>
+
+            <p><strong>Seguridad</strong></p>
+            <p>[Yo|Nosotros] valoramos su confianza en proporcionarnos su Información Personal, por lo que estamos esforzándonos por utilizar medios comercialmente aceptables para protegerla. Pero recuerde que ningún método de transmisión por Internet, o método de almacenamiento electrónico es 100% seguro y confiable, y [yo|nosotros] no podemos garantizar su seguridad absoluta.</p>
+
+            <p><strong>Enlaces a Otros Sitios</strong></p>
+            <p>Este Servicio puede contener enlaces a otros sitios. Si hace clic en un enlace de terceros, será dirigido a ese sitio. Tenga en cuenta que estos sitios externos no son operados por [mí|nosotros]. Por lo tanto, le aconsejo encarecidamente que revise la Política de Privacidad de estos sitios web. No tengo control sobre, y no asumo ninguna responsabilidad por el contenido, políticas de privacidad o prácticas de sitios o servicios de terceros.</p>
+
+            <p><strong>Privacidad de los Niños</strong></p>
+            <p>Este Servicio no se dirige a nadie menor de 13 años. [Yo|Nosotros] no recopilamos a sabiendas información de identificación personal de niños menores de 13 años. En el caso de que [yo|nosotros] descubramos que un niño menor de 13 años nos ha proporcionado información personal, [yo|nosotros] la eliminamos inmediatamente de nuestros servidores. Si usted es un padre o tutor y sabe que su hijo nos ha proporcionado información personal, por favor contáctenos para que [yo|nosotros] podamos hacer las acciones necesarias.</p>
+
+            <p><strong>Cambios a Esta Política de Privacidad</strong></p>
+            <p>[Yo|Nosotros] podemos actualizar nuestra Política de Privacidad de vez en cuando. Por lo tanto, se le aconseja revisar esta página periódicamente para cualquier cambio. [Yo|Nosotros] le notificaremos de cualquier cambio publicando la nueva Política de Privacidad en esta página. Estos cambios son efectivos inmediatamente después de ser publicados en esta página.</p>
+
+            <p><strong>Contáctenos</strong></p>
+            <p>Si tiene alguna pregunta o sugerencia sobre [mi|nuestra] Política de Privacidad, no dude en contactarnos.</p>
+            <p>Esta página de Política de Privacidad fue creada en <a href="https://privacypolicytemplate.net" target="_blank">privacypolicytemplate.net</a>.</p>
+            </body>
+</html>
+        ]]>
+    </string>
+    <string name="settings">Ajustes</string>
+</resources>

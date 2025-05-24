@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--App Dark mode colors -->
+    <color name="navbarBg" >#232b2e</color>
+    <color name="textViewBg">#232b2e</color>
+    <color name="edit_text_color">#e9f1f4</color>
+    <color name="text_view_color">#a4c2fc</color>
+    <color name="bgButtons">#f2f8f8</color>
+    <color name="btnBgTopButtons">#e1ebec</color>
+    <color name="btnRightBgButtons">#3F51B5</color>
+    <color name="texColorButton">#1a2225</color>
+    <color name="btnRightTextColor">#ffeed1</color>
+    <color name="ripple_color">#80FFFFFF</color>
+</resources>
