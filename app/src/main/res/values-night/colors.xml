@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--App Dark mode colors -->
-    <color name="navbarBg" >#232b2e</color>
-    <color name="textViewBg">#232b2e</color>
+    <color name="nav_bar_background_color">#232b2e</color>
+    <color name="text_view_background_color">#232b2e</color>
     <color name="edit_text_color">#e9f1f4</color>
     <color name="text_view_color">#a4c2fc</color>
-    <color name="bgButtons">#f2f8f8</color>
-    <color name="btnBgTopButtons">#e1ebec</color>
-    <color name="btnRightBgButtons">#3F51B5</color>
-    <color name="texColorButton">#1a2225</color>
-    <color name="btnRightTextColor">#ffeed1</color>
+    <color name="buttons_background_color">#f2f8f8</color>
+    <color name="buttons_operators_top_color">#e1ebec</color>
+    <color name="buttons_operators_right_color">#3F51B5</color>
+    <color name="text_button_color">#1a2225</color>
+    <color name="buttons_text_right_color">#ffeed1</color>
+    <color name="popup_background_color">#2E383C</color>
     <color name="ripple_color">#80FFFFFF</color>
+    <!-- Dialog colors -->
+    <color name="dialog_title_color">#e9f1f4</color>
+    <color name="dialog_bg_color">#2E383C</color>
+    <color name="toolbar_background_color">#232b2e</color>
+    <!--Settings activity colors -->
+    <color name="scroll_view_bg_color">#2E383C</color>
+    <color name="card_view_background_color">#e1ebbb</color>
 </resources>

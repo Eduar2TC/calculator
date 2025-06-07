@@ -24,6 +24,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.eduar2tc.calculator.utils.CustomDialog;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private void initializeComponents() {
         initializeTextViewAndEditText();
         initializeButtons();
+        initializeAppbarStatusBar();
     }
 
     private void initializeTextViewAndEditText() {
@@ -98,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
             arrayListOperators[i] = findViewById(id);
             arrayListOperators[i].setOnClickListener(this::onClick);
         }
+    }
+    private void initializeAppbarStatusBar() {
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_app_bar_background_color));
     }
 
     private void configureListeners() {
@@ -269,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
         editText.setText(textViewResult.getText());
         editText.setAlpha(1f);
         textViewResult.setAlpha(1f);
-        textViewResult.setTextSize(38f);
+        textViewResult.setTextSize(55f);
         textViewResult.setTranslationY(0f);
         textViewResult.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_view_color));
         editText.setTranslationY(0f);

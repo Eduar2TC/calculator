@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.eduar2tc.calculator.R;
+import com.eduar2tc.calculator.utils.SharePrefs;
 
 public class Settings extends AppCompatActivity {
     private static ConstraintLayout cardViewHibernationConstraint;
@@ -21,10 +23,11 @@ public class Settings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //apply theme
+        applyTheme();
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
-
         Toolbar toolbar = findViewById(R.id.toolbar) ;
         setSupportActionBar(toolbar);
 
@@ -60,5 +63,20 @@ public class Settings extends AppCompatActivity {
     private void hibernation() {
         cardViewHibernationConstraint.setOnClickListener(v -> switchHibernation.toggle());
         switchHibernation.setOnClickListener(v -> switchHibernation.toggle());
+    }
+    //TODO: Fix the theme not applying when changing it
+    private void applyTheme() {
+        String theme = SharePrefs.getInstance(this).getTheme();
+        switch (theme) {
+            case "system":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case "light":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+        }
     }
 }

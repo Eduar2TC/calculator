@@ -104,4 +104,6 @@
         ]]>
     </string>
     <string name="settings">Settings</string>
+    <string name="enable_or_disable_animations">Enable or disable animations</string>
+    <string name="icon_animation">Icon animation</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.eduar2tc.calculator.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -125,18 +126,23 @@ public class CustomDialog {
         acceptButton.setBackgroundColor(Color.TRANSPARENT);
         acceptButton.setText(R.string.about_dialog_accept);
         acceptButton.setOnClickListener(view -> {
-            //handle theme selection
             int selectedId = radioGroup.getCheckedRadioButtonId();
+            String selectedTheme = "system";
             if (selectedId == lightRadioButton.getId()) {
+                selectedTheme = "light";
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                dialog.dismiss();
             } else if (selectedId == darkRadioButton.getId()) {
+                selectedTheme = "dark";
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                dialog.dismiss();
             } else if (selectedId == defaultRadioButton.getId()) {
+                selectedTheme = "system";
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                dialog.dismiss();
             }
+            SharePrefs.getInstance(context).setTheme(selectedTheme);
+            if (context instanceof Activity) {
+                ((Activity) context).recreate();
+            }
+            dialog.dismiss();
         });
 
         Button cancelButton = new Button(context);
