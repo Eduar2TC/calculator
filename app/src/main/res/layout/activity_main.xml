@@ -31,7 +31,7 @@
 
             <EditText
                 android:id="@+id/editText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/text_view_background_color"
                 android:ellipsize="end"
@@ -46,6 +46,10 @@
                 app:autoSizeStepGranularity="1sp"
                 app:autoSizeTextType="uniform"
                 android:textCursorDrawable="@drawable/custom_cursor"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textIsSelectable="true"
 
                 />
         </HorizontalScrollView>

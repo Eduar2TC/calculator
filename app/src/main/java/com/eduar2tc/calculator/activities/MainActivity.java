@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.Selection;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
@@ -24,9 +23,9 @@ import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.eduar2tc.calculator.DecimalTextWatcher;
 import com.eduar2tc.calculator.utils.CustomDialog;
 import com.eduar2tc.calculator.utils.InputFormat;
 import com.eduar2tc.calculator.utils.PerformOperations;
@@ -80,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private void initializeTextViewAndEditText() {
         editText = findViewById(id.editText);
         editText.requestFocus();
+        editText.setShowSoftInputOnFocus(false);
         textViewResult = findViewById(id.textViewResult);
         originalTextSize = editText.getTextSize();
         horizontalScrollView = findViewById(id.horizontalScrollView);
@@ -101,8 +101,15 @@ public class MainActivity extends AppCompatActivity {
             arrayListOperators[i].setOnClickListener(this::onClick);
         }
     }
+
     private void initializeAppbarStatusBar() {
+        //Toolbar
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_app_bar_background_color));
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(drawable.baseline_history_24);
+            getSupportActionBar().setTitle("");
+        }
     }
 
     private void configureListeners() {
@@ -112,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void configureEditTextListener() {
+        // Restaurado: Formateador de miles en tiempo real
+        editText.addTextChangedListener(new DecimalTextWatcher(editText));
+
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence editable, int start, int count, int after) {
@@ -131,10 +141,9 @@ public class MainActivity extends AppCompatActivity {
             int offset = editText.getOffsetForPosition(event.getX(), event.getY());
             Selection.setSelection(editText.getText(), offset);
             hideKeyboard(editText);
-            return true;
+            return false; //false show handle
         });
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private void configureTextViewResultListener() {
@@ -144,16 +153,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: Refactor this method . Restringir la animacion solo cuando la operacion sea mas de dos operandos y textViewResult no este vacio,
-    // si textViewResult es vacio no se debe realizar la animacion
     private void handleTextChange(Editable editable) {
         if (containsInvalidOperators(editable)) {
             validOperation = false;
         } else {
-            if (editable.length() > 1 ) {
-                String result = PerformOperations.performOperation(editable.toString());
+            // Restaurado: Limpiar comas para el cálculo interno previo
+            String expression = editable.toString().replace(",", "");
+            if (expression.length() > 0 && PerformOperations.containsOperator(expression)) {
+                String result = PerformOperations.performOperation(expression);
                 textViewResult.setText(result);
-                validOperation = true;
+                validOperation = !result.equals("Error");
             } else {
                 textViewResult.setText("");
             }
@@ -177,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (imm != null) imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -189,10 +198,9 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("NonConstantResourceId")
     public void performOperation(Button buttonClicked) {
-
         switch (buttonClicked.getId()) {
             case OPERATOR_BACK:
-                PerformOperations.performBackOperation(editText, textViewResult);
+                PerformOperations.deleteCharAtCursor(editText);
                 adjustTextSizeWhenPressBack(editText.getText());
                 break;
             case OPERATOR_CLEAR:
@@ -204,13 +212,14 @@ public class MainActivity extends AppCompatActivity {
             case OPERATOR_MULTIPLICATION:
             case OPERATOR_ADDITION:
             case OPERATOR_SUBTRACTION:
-                PerformOperations.appendOperation(editText, buttonClicked.getText().toString());
+                 String operator = buttonClicked.getText().toString();
+                PerformOperations.insertTextAtCursor(editText, operator);
                 break;
             case OPERATOR_MORE_MINUS:
                 PerformOperations.toggleSign(editText);
                 break;
             case OPERATOR_EQUAL:
-                if (validOperation) {
+                if (validOperation && !textViewResult.getText().toString().isEmpty()) {
                     PerformOperations.performEqualOperation(editText, textViewResult);
                     resultAnimation();
                 }
@@ -285,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
     private void adjustTextSize(Editable editable) {
         Paint textPaint = editText.getPaint();
         int maxWidth = editText.getWidth();
+        if (maxWidth <= 0) return;
         int maxDigits = (int) (maxWidth / textPaint.measureText("0"));
         int currentLength = editable.length();
         if (currentLength > maxDigits) {
@@ -297,6 +307,7 @@ public class MainActivity extends AppCompatActivity {
     private void adjustTextSizeWhenPressBack(Editable editable) {
         Paint textPaint = editText.getPaint();
         int maxWidth = editText.getWidth();
+        if (maxWidth <= 0) return;
         int maxDigits = (int) (maxWidth / textPaint.measureText("0"));
         int currentLength = editable.length();
 

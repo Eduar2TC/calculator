@@ -1,5 +1,6 @@
 package com.eduar2tc.calculator.utils;
 
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
@@ -31,7 +32,6 @@ public class InputFormat {
     public static String formatResult(String result) {
         Log.d("InputFormat", "formatResult: " + result);
         try{
-            // rounded result to  2 decimal places if it is a decimal number, if contains a "5" in the third decimal place, it will not be rounded to the next decimal place
             if (result.contains(DECIMAL_POINT)) {
                 String[] parts = result.split("\\.");
                 if (parts.length > 1 && parts[1].length() > 2) {
@@ -42,16 +42,15 @@ public class InputFormat {
                     }
                 }
             }
-            //TODO: Fix this bug
-            // if result only contains a zero and decimal point and right side is empty
+
             if (result.equals(ZERO + DECIMAL_POINT)) {
                 result = ZERO;
             }
-            // if result contains a decimal point and two zeros or more in the right side (e.g. 1.0000) it will be displayed as an integer
+
             if (result.contains(DECIMAL_POINT) && result.split("\\.")[1].matches("0{1,}")) {
                 result = result.split("\\.")[0];
             }
-            // if result is too long, it will be displayed in scientific notation
+
             if (result.length() > MAX_RESULT_LENGTH) {
                 result = String.format(Locale.getDefault(), SCIENTIFIC_NOTATION_FORMAT, Double.parseDouble(result));
             }
@@ -62,7 +61,6 @@ public class InputFormat {
         return result;
     }
 
-
     public static boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);
@@ -72,13 +70,18 @@ public class InputFormat {
         }
     }
 
-    public static void checkIsNumeric(TextView editText, Button button) {
+    public static void checkIsNumeric(EditText editText, Button button) {
         if (TextUtils.isDigitsOnly(button.getText())) {
-            editText.append(button.getText().toString());
+            int start = editText.getSelectionStart();
+            int end = editText.getSelectionEnd();
+            editText.getText().replace(Math.min(start, end), Math.max(start, end), button.getText());
             isInt = true;
         }
-        if (editText.getText().toString().isEmpty() && button.getText().toString().equals(DECIMAL_POINT)) {
-            editText.append(ZERO + DECIMAL_POINT);
+
+        String currentText = editText.getText().toString();
+        if (currentText.isEmpty() && button.getText().toString().equals(DECIMAL_POINT)) {
+            editText.setText(ZERO + DECIMAL_POINT);
+            editText.setSelection(editText.getText().length());
             isInt = false;
             foundPoint = true;
         }
@@ -87,22 +90,23 @@ public class InputFormat {
     public static void checkDecimalPoint(EditText editText, Button buttonClicked) {
         String currentText = editText.getText().toString();
 
-        // If it is empty or ends with an operator, add "0."
         if (currentText.isEmpty() || currentText.matches(".*[+\\-×÷]$")) {
-            editText.append(ZERO + DECIMAL_POINT);
+            int start = editText.getSelectionStart();
+            int end = editText.getSelectionEnd();
+            editText.getText().replace(Math.min(start, end), Math.max(start, end), ZERO + DECIMAL_POINT);
             return;
         }
 
         String[] operands = currentText.split("[+\\-×÷]");
         String lastOperand = operands[operands.length - 1];
 
-        // If the last operand does not contain a decimal point, add the point
         if (!lastOperand.contains(DECIMAL_POINT)) {
-            editText.append(buttonClicked.getText());
+            int start = editText.getSelectionStart();
+            int end = editText.getSelectionEnd();
+            editText.getText().replace(Math.min(start, end), Math.max(start, end), buttonClicked.getText());
         }
     }
 
-    // Unary operator (-, +)
     public boolean checkIsUnary(TextView textView, String operator) {
         return !textView.getText().toString().split(operator)[0].isEmpty();
     }
