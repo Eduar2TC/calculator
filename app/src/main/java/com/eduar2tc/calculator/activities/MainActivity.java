@@ -292,6 +292,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void adjustTextSize(Editable editable) {
+        // 1. Definir el tamaño máximo (el del XML) y el mínimo (donde empieza el scroll)
+        float maxTextSizeSP = 70f;
+        float minTextSizeSP = 45f; // Cuando llegue a 45sp, dejará de achicarse y hará scroll
+
+        Paint textPaint = editText.getPaint();
+        int maxWidth = editText.getWidth(); // El ancho visible de la pantalla
+        if (maxWidth <= 0) return;
+
+        // Calcular cuánto mide el texto actualmente
+        String text = editable.toString();
+        float textWidth = textPaint.measureText(text);
+
+        if (textWidth > maxWidth) {
+            // Calcular el nuevo tamaño proporcional
+            float newSize = textPaint.getTextSize() * (maxWidth / textWidth);
+
+            // LIMITAR: Si el nuevo tamaño es menor al mínimo, usamos el mínimo
+            if (newSize < TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, minTextSizeSP, getResources().getDisplayMetrics())) {
+                editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, minTextSizeSP);
+            } else {
+                editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, newSize);
+            }
+        } else {
+            // Si el texto es corto, volver al tamaño original
+            editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, maxTextSizeSP);
+        }
+    }
+    /*private void adjustTextSize(Editable editable) {
         Paint textPaint = editText.getPaint();
         int maxWidth = editText.getWidth();
         if (maxWidth <= 0) return;
@@ -302,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
             editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, Math.max(newTextSize, 12f));
             editText.setMovementMethod(new ScrollingMovementMethod());
         }
-    }
+    }*/
 
     private void adjustTextSizeWhenPressBack(Editable editable) {
         Paint textPaint = editText.getPaint();

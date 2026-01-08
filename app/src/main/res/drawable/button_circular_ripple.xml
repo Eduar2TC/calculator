@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#2438AACC"> <!-- Color de la onda (Blanco con transparencia) -->
+
+    <!-- 1. La Máscara (Define que la onda sea un círculo) -->
+    <item android:id="@android:id/mask">
+      <inset
+          android:insetLeft="4dp"
+          android:insetTop="8dp"
+          android:insetRight="4dp"
+          android:insetBottom="8dp">
+          <shape android:shape="oval">
+              <solid android:color="@android:color/white" />
+          </shape>
+      </inset>
+    </item>
+
+    <!-- 2. El fondo del botón (Cuadrado con tu color original) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/buttons_background_color" />
+        </shape>
+    </item>
+
+</ripple>
