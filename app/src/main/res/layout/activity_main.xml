@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity"
     android:id="@+id/constraintLayout"
-    >
+    android:background="@color/buttons_background_color" > <!-- TODO Fix , Crear un Contenedor con color de fondo de los botones -->
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/textViewContainer"
@@ -65,7 +65,8 @@
             android:textSize="55sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/operator9"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -86,7 +87,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn1" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/btn0"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -108,6 +110,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn2" />
 
     <Button
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/operator8"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -146,7 +149,8 @@
         app:layout_constraintStart_toEndOf="@+id/operator8"
         app:layout_constraintTop_toBottomOf="@+id/operator6" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/btn1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -168,7 +172,8 @@
         app:layout_constraintTop_toBottomOf="@+id/btn4"
         />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/btn2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -189,7 +194,8 @@
         app:layout_constraintStart_toEndOf="@+id/btn1"
         app:layout_constraintTop_toBottomOf="@+id/btn5" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/btn3"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -228,7 +234,7 @@
         app:layout_constraintStart_toEndOf="@+id/btn3"
         app:layout_constraintTop_toBottomOf="@+id/operator5" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn4"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -249,7 +255,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn7" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/btn5"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -270,7 +277,8 @@
         app:layout_constraintStart_toEndOf="@+id/btn4"
         app:layout_constraintTop_toBottomOf="@+id/btn9" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/btn6"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -309,7 +317,8 @@
         app:layout_constraintStart_toEndOf="@+id/btn6"
         app:layout_constraintTop_toBottomOf="@+id/operator4" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/btn7"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -330,7 +339,8 @@
         app:layout_constraintTop_toBottomOf="@+id/operator0"
         android:textColor="@color/text_button_color" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/btn8"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -351,7 +361,8 @@
         app:layout_constraintStart_toEndOf="@+id/btn7"
         app:layout_constraintTop_toBottomOf="@+id/operator1" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/btn9"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -230,66 +230,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resultAnimation() {
-        AnimatorSet set = new AnimatorSet();
-        set.setDuration(350);
-        set.playTogether(
-                createFadeOutAnimator(editText),
-                createFadeOutAnimator(textViewResult),
-                createMoveAnimator(textViewResult),
-                createMoveAnimator(editText),
-                createTextSizeAnimator(textViewResult),
-                createTextColorAnimator(textViewResult)
-        );
+        // --- Preparación ---
+        // Hacemos el resultado invisible al principio para que aparezca suavemente.
+        textViewResult.setAlpha(0f);
+        // Calculamos la distancia que el resultado debe "subir".
+        float distance = editText.getY() - textViewResult.getY();
 
-        set.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(@NonNull Animator animation) {}
+        // --- Animación de la Expresión (EditText) ---
+        // Se desvanece y baja un poco para dar espacio al resultado.
+        editText.animate()
+                .alpha(0f)
+                .translationYBy(50f) // Baja ligeramente
+                .setDuration(250)
+                .setInterpolator(new android.view.animation.AccelerateInterpolator())
+                .start();
 
-            @Override
-            public void onAnimationEnd(@NonNull Animator animator) {
-                resetAfterAnimation();
-            }
-
-            @Override
-            public void onAnimationCancel(@NonNull Animator animation) {}
-
-            @Override
-            public void onAnimationRepeat(@NonNull Animator animation) {}
-        });
-
-        set.start();
+        // --- Animación del Resultado (TextViewResult) ---
+        // Sube a la posición del EditText, aparece y recupera su tamaño.
+        // Cuando la animación del resultado termina, reseteamos todo.
+        textViewResult.animate()
+                .translationY(distance) // Sube a la posición del EditText
+                .alpha(1f)
+                .setDuration(350)
+                .setInterpolator(new android.view.animation.DecelerateInterpolator())
+                .withEndAction(this::resetAfterAnimation)
+                .start();
     }
-
-    private ObjectAnimator createFadeOutAnimator(View view) {
-        return ObjectAnimator.ofFloat(view, "alpha", 1f, 0f);
-    }
-
-    private ObjectAnimator createMoveAnimator(View view) {
-        float finalY = editText.getY() - textViewResult.getY() + editText.getHeight() - textViewResult.getHeight();
-        return ObjectAnimator.ofFloat(view, "translationY", 0f, finalY);
-    }
-
-    private ObjectAnimator createTextSizeAnimator(TextView textView) {
-        return ObjectAnimator.ofFloat(textView, "textSize", textView.getTextSize(), 70f);
-    }
-
-    private ObjectAnimator createTextColorAnimator(TextView textView) {
-        return ObjectAnimator.ofArgb(textView, "textColor",
-                ContextCompat.getColor(this, R.color.text_view_color),
-                ContextCompat.getColor(this, R.color.edit_text_color));
-    }
-
     private void resetAfterAnimation() {
-        editText.setText(textViewResult.getText());
-        editText.setAlpha(1f);
-        textViewResult.setAlpha(1f);
-        textViewResult.setTextSize(55f);
-        textViewResult.setTranslationY(0f);
-        textViewResult.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_view_color));
-        editText.setTranslationY(0f);
-        editText.setSelection(editText.getText().length());
-        textViewResult.setText("");
+        editText.post(() -> {
+            editText.setText(textViewResult.getText());
+
+            editText.setAlpha(1f);
+            editText.setTranslationY(0f);
+            editText.setSelection(editText.getText().length());
+
+            textViewResult.setAlpha(1f);
+            textViewResult.setTranslationY(0f);
+        });
     }
+
+
 
     private void adjustTextSize(Editable editable) {
         // 1. Definir el tamaño máximo (el del XML) y el mínimo (donde empieza el scroll)
@@ -319,18 +299,6 @@ public class MainActivity extends AppCompatActivity {
             editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, maxTextSizeSP);
         }
     }
-    /*private void adjustTextSize(Editable editable) {
-        Paint textPaint = editText.getPaint();
-        int maxWidth = editText.getWidth();
-        if (maxWidth <= 0) return;
-        int maxDigits = (int) (maxWidth / textPaint.measureText("0"));
-        int currentLength = editable.length();
-        if (currentLength > maxDigits) {
-            float newTextSize = textPaint.getTextSize() * ((float) maxDigits / currentLength);
-            editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, Math.max(newTextSize, 12f));
-            editText.setMovementMethod(new ScrollingMovementMethod());
-        }
-    }*/
 
     private void adjustTextSizeWhenPressBack(Editable editable) {
         Paint textPaint = editText.getPaint();

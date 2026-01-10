@@ -1,25 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="#2438AACC"> <!-- Color de la onda (Blanco con transparencia) -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- 1. La Máscara (Define que la onda sea un círculo) -->
-    <item android:id="@android:id/mask">
-      <inset
-          android:insetLeft="4dp"
-          android:insetTop="8dp"
-          android:insetRight="4dp"
-          android:insetBottom="8dp">
-          <shape android:shape="oval">
-              <solid android:color="@android:color/white" />
-          </shape>
-      </inset>
+    <!-- 1. ESTADO CUANDO ESTÁ PRESIONADO -->
+    <item android:state_pressed="true">
+        <!-- Usamos una lista de capas para poner la onda y el borde juntos -->
+        <layer-list>
+            <!-- Capa 1: El fondo del botón -->
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/buttons_background_color" />
+                    <corners android:radius="12dp" />
+                </shape>
+            </item>
+
+            <!-- Capa 2: EL BORDE EXTERNO que aparece al presionar -->
+            <item>
+                <shape android:shape="rectangle">
+                    <!-- Esto hace que el shape sea solo un borde -->
+                    <solid android:color="@android:color/transparent" />
+                    <!-- Grosor y color del borde -->
+                    <stroke android:width="2dp" android:color="@android:color/white" />
+                    <!-- Redondeo de las esquinas -->
+                    <corners android:radius="12dp" />
+                </shape>
+            </item>
+
+            <!-- Capa 3: La animación de la onda (ripple) que se dibuja encima -->
+            <item>
+                <ripple android:color="#0E166FF7"> <!-- Color de la onda -->
+                    <item android:id="@android:id/mask">
+                        <inset
+                            android:insetLeft="4dp"
+                            android:insetTop="8dp"
+                            android:insetRight="4dp"
+                            android:insetBottom="8dp">
+                            <shape android:shape="rectangle">
+                                <solid android:color="@android:color/white" />
+                                <corners android:radius="60dp" />
+                            </shape>
+                        </inset>
+                    </item>
+                </ripple>
+            </item>
+        </layer-list>
     </item>
 
-    <!-- 2. El fondo del botón (Cuadrado con tu color original) -->
+    <!-- 2. ESTADO NORMAL (cuando no está presionado) -->
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/buttons_background_color" />
         </shape>
     </item>
 
-</ripple>
+</selector>
