@@ -9,8 +9,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!--App Light colors -->
-    <color name="nav_bar_background_color">#FBFFF1</color> <!-- #232b2e -->
-    <color name="text_view_background_color">#FBFFF1</color> <!-- #232b2e -->
+    <color name="nav_bar_background_color">#FBFFF1</color>
+    <color name="text_view_background_color">#FBFFF1</color>
     <color name="edit_text_color">#222223</color>
     <color name="text_view_color">#3F51B5</color>
     <color name="buttons_background_color">#f2f8f8</color>
@@ -21,13 +21,14 @@
     <color name="popup_background_color">#FBFFF1</color>
     <color name="dialog_bg_color">@color/white</color>
     <color name="toolbar_background_color">#FBFFF1</color>
-    <color name="status_app_bar_background_color" >#E91E63</color> <!-- #232b2e -->
+    <color name="status_app_bar_background_color">#FBFFF1</color>
     <color name="ripple_color">#80FFFFFF</color>
     <color name="card_view_background_color">#e1ebec</color>
-    <!-- Dialog colors -->
     <color name="dialog_title_color">#232b2e</color>
-    <!-- Settings activity colors -->
     <color name="scroll_view_bg_color">#BDB9B9</color>
-    <!-- overflow menu item text color -->
     <color name="overflow_menu_item_text_color">#1A2225</color>
+    <!-- Top sheet colors -->
+    <color name="top_sheet_background_color">#f2f8f8</color>
+    <color name="top_sheet_handle_color">#1a2225</color>
 </resources>
+

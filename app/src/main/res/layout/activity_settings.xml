@@ -70,7 +70,7 @@
                         android:layout_height="24dp"
                         android:layout_margin="8dp"
                         android:contentDescription="Icon"
-                        android:src="@drawable/md_sleep"
+                        android:src="@drawable/ic_sleep"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -139,7 +139,7 @@
                         android:layout_height="24dp"
                         android:layout_margin="8dp"
                         android:contentDescription="@string/icon_animation"
-                        android:src="@drawable/baseline_animation_24"
+                        android:src="@drawable/ic_animation_24"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

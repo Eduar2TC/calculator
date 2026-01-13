@@ -2,20 +2,17 @@ package com.eduar2tc.calculator.activities;
 
 import static com.eduar2tc.calculator.R.*;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
-import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,15 +20,24 @@ import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eduar2tc.calculator.DecimalTextWatcher;
+import com.eduar2tc.calculator.R;
+import com.eduar2tc.calculator.adapter.HistoryAdapter;
+import com.eduar2tc.calculator.behavior.TopSheetBehavior;
+import com.eduar2tc.calculator.model.Calculation;
 import com.eduar2tc.calculator.utils.CustomDialog;
 import com.eduar2tc.calculator.utils.InputFormat;
 import com.eduar2tc.calculator.utils.PerformOperations;
-import com.eduar2tc.calculator.R;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements TopSheetBehavior.TopSheetCallback {
     private EditText editText;
     private TextView textViewResult;
     private HorizontalScrollView horizontalScrollView;
@@ -49,13 +55,29 @@ public class MainActivity extends AppCompatActivity {
     private static final int OPERATOR_PERCENTAGE = id.operator2;
     private static final int OPERATOR_MORE_MINUS = id.operator9;
 
+    private TopSheetBehavior<ConstraintLayout> topSheetBehavior;
+    private ConstraintLayout topSheet;
+    private ConstraintLayout constraintLayout;
+
+    private RecyclerView recyclerViewHistory;
+    private HistoryAdapter historyAdapter;
+    private List<Calculation> calculationHistory;
+
+    private float initialTouchY = 0;
+    private boolean isDraggingTopSheet = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
+        constraintLayout = findViewById(id.constraintLayout);
         initializeComponents();
         configureListeners();
         preventLockScreen();
+        initializeTopSheet();
     }
 
     @Override
@@ -66,14 +88,35 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            toggleTopSheet();
+            return true;
+        }
         new CustomDialog(MainActivity.this).onOptionsItemSelected(item, MainActivity.this);
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleTopSheet() {
+        if (topSheetBehavior.getState() == TopSheetBehavior.STATE_COLLAPSED) {
+            topSheetBehavior.setState(TopSheetBehavior.STATE_PEEKED);
+        } else {
+            topSheetBehavior.setState(TopSheetBehavior.STATE_COLLAPSED);
+        }
     }
 
     private void initializeComponents() {
         initializeTextViewAndEditText();
         initializeButtons();
         initializeAppbarStatusBar();
+        initializeHistory();
+    }
+
+    private void initializeHistory(){
+        recyclerViewHistory = findViewById(R.id.recyclerViewHistory);
+        calculationHistory = new ArrayList<>();
+        historyAdapter = new HistoryAdapter(calculationHistory);
+        recyclerViewHistory.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewHistory.setAdapter(historyAdapter);
     }
 
     private void initializeTextViewAndEditText() {
@@ -83,65 +126,89 @@ public class MainActivity extends AppCompatActivity {
         textViewResult = findViewById(id.textViewResult);
         originalTextSize = editText.getTextSize();
         horizontalScrollView = findViewById(id.horizontalScrollView);
+        editText.setText("");
+        textViewResult.setText("");
+        editText.setHint("");
+        textViewResult.setHint("");
     }
 
     private void initializeButtons() {
-        Button[] arrayListBtn = new Button[10];
-        Button[] arrayListOperators = new Button[10];
-
-        for (int i = 0; i < arrayListBtn.length; i++) {
-            int id = getResources().getIdentifier("btn" + i, "id", getPackageName());
-            arrayListBtn[i] = findViewById(id);
-            arrayListBtn[i].setOnClickListener(this::onClick);
+        for (int i = 0; i <= 9; i++) {
+            int resId = getResources().getIdentifier("btn" + i, "id", getPackageName());
+            findViewById(resId).setOnClickListener(this::onClick);
         }
-
-        for (int i = 0; i < arrayListOperators.length; i++) {
-            int id = getResources().getIdentifier("operator" + i, "id", getPackageName());
-            arrayListOperators[i] = findViewById(id);
-            arrayListOperators[i].setOnClickListener(this::onClick);
+        for (int i = 0; i <= 9; i++) {
+            int resId = getResources().getIdentifier("operator" + i, "id", getPackageName());
+            findViewById(resId).setOnClickListener(this::onClick);
         }
     }
-
     private void initializeAppbarStatusBar() {
-        //Toolbar
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_app_bar_background_color));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(drawable.baseline_history_24);
             getSupportActionBar().setTitle("");
         }
+        initializeHomeAsUpIndicator();
     }
-
+    private void initializeHomeAsUpIndicator() {
+        android.graphics.drawable.Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_history_24);
+        if (drawable != null) {
+            int color = ContextCompat.getColor(this, R.color.overflow_menu_item_text_color);
+            drawable.setTint(color);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setHomeAsUpIndicator(drawable);
+            }
+        }
+    }
     private void configureListeners() {
         configureEditTextListener();
         configureTextViewResultListener();
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private void configureEditTextListener() {
-        // Restaurado: Formateador de miles en tiempo real
-        editText.addTextChangedListener(new DecimalTextWatcher(editText));
-
-        editText.addTextChangedListener(new TextWatcher() {
+    private void initializeTopSheet() {
+        topSheet = findViewById(id.topSheet);
+        topSheetBehavior = TopSheetBehavior.from(topSheet);
+        topSheetBehavior.setTopSheetCallback(this);
+        topSheet.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void beforeTextChanged(CharSequence editable, int start, int count, int after) {
-                adjustTextSize((Editable) editable);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence editable, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                handleTextChange(editable);
+            public void onGlobalLayout() {
+                topSheet.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                topSheetBehavior.setState(TopSheetBehavior.STATE_COLLAPSED);
             }
         });
+    }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private void configureEditTextListener() {
+        editText.addTextChangedListener(new DecimalTextWatcher(editText));
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { adjustTextSize((Editable) s); }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) { handleTextChange(s); }
+        });
+        // Permitir drag desde cualquier parte del EditText para controlar el TopSheet
         editText.setOnTouchListener((v, event) -> {
-            int offset = editText.getOffsetForPosition(event.getX(), event.getY());
-            Selection.setSelection(editText.getText(), offset);
-            hideKeyboard(editText);
-            return false; //false show handle
+            switch (event.getActionMasked()) {
+                case android.view.MotionEvent.ACTION_DOWN:
+                    initialTouchY = event.getRawY();
+                    return false; // Permitir selección de texto
+                case android.view.MotionEvent.ACTION_MOVE:
+                    float dy = event.getRawY() - initialTouchY;
+                    if (Math.abs(dy) > 40) { // Umbral para detectar drag
+                        if (topSheetBehavior != null) {
+                            if (dy > 0) {
+                                // Drag hacia abajo: expandir TopSheet
+                                topSheetBehavior.setState(TopSheetBehavior.STATE_PEEKED);
+                            } else {
+                                // Drag hacia arriba: colapsar TopSheet
+                                topSheetBehavior.setState(TopSheetBehavior.STATE_COLLAPSED);
+                            }
+                            return true;
+                        }
+                    }
+                    break;
+            }
+            return false;
         });
     }
 
@@ -157,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
         if (containsInvalidOperators(editable)) {
             validOperation = false;
         } else {
-            // Restaurado: Limpiar comas para el cálculo interno previo
             String expression = editable.toString().replace(",", "");
             if (expression.length() > 0 && PerformOperations.containsOperator(expression)) {
                 String result = PerformOperations.performOperation(expression);
@@ -199,103 +265,57 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     public void performOperation(Button buttonClicked) {
         switch (buttonClicked.getId()) {
-            case OPERATOR_BACK:
-                PerformOperations.deleteCharAtCursor(editText);
-                adjustTextSizeWhenPressBack(editText.getText());
-                break;
-            case OPERATOR_CLEAR:
-                PerformOperations.performClearOperation(editText, textViewResult, horizontalScrollView);
-                break;
-            case OPERATOR_DECIMAL_POINT: InputFormat.checkDecimalPoint(editText, buttonClicked);
-                break;
-            case OPERATOR_DIVISION:
-            case OPERATOR_MULTIPLICATION:
-            case OPERATOR_ADDITION:
-            case OPERATOR_SUBTRACTION:
-                 String operator = buttonClicked.getText().toString();
-                PerformOperations.insertTextAtCursor(editText, operator);
-                break;
-            case OPERATOR_MORE_MINUS:
-                PerformOperations.toggleSign(editText);
-                break;
+            case OPERATOR_BACK: PerformOperations.deleteCharAtCursor(editText); adjustTextSizeWhenPressBack(editText.getText()); break;
+            case OPERATOR_CLEAR: PerformOperations.performClearOperation(editText, textViewResult, horizontalScrollView); break;
+            case OPERATOR_DECIMAL_POINT: InputFormat.checkDecimalPoint(editText, buttonClicked); break;
+            case OPERATOR_DIVISION: case OPERATOR_MULTIPLICATION: case OPERATOR_ADDITION: case OPERATOR_SUBTRACTION:
+                PerformOperations.insertTextAtCursor(editText, buttonClicked.getText().toString()); break;
+            case OPERATOR_MORE_MINUS: PerformOperations.toggleSign(editText); break;
             case OPERATOR_EQUAL:
                 if (validOperation && !textViewResult.getText().toString().isEmpty()) {
+                    String expression = editText.getText().toString();
+                    String result = textViewResult.getText().toString();
+                    calculationHistory.add(0, new Calculation(expression, result));
+                    historyAdapter.notifyDataSetChanged();
                     PerformOperations.performEqualOperation(editText, textViewResult);
                     resultAnimation();
                 }
-                break;
-            default:
                 break;
         }
     }
 
     private void resultAnimation() {
-        // --- Preparación ---
-        // Hacemos el resultado invisible al principio para que aparezca suavemente.
         textViewResult.setAlpha(0f);
-        // Calculamos la distancia que el resultado debe "subir".
         float distance = editText.getY() - textViewResult.getY();
-
-        // --- Animación de la Expresión (EditText) ---
-        // Se desvanece y baja un poco para dar espacio al resultado.
-        editText.animate()
-                .alpha(0f)
-                .translationYBy(50f) // Baja ligeramente
-                .setDuration(250)
-                .setInterpolator(new android.view.animation.AccelerateInterpolator())
-                .start();
-
-        // --- Animación del Resultado (TextViewResult) ---
-        // Sube a la posición del EditText, aparece y recupera su tamaño.
-        // Cuando la animación del resultado termina, reseteamos todo.
-        textViewResult.animate()
-                .translationY(distance) // Sube a la posición del EditText
-                .alpha(1f)
-                .setDuration(350)
-                .setInterpolator(new android.view.animation.DecelerateInterpolator())
-                .withEndAction(this::resetAfterAnimation)
-                .start();
+        editText.animate().alpha(0f).translationYBy(50f).setDuration(250).setInterpolator(new android.view.animation.AccelerateInterpolator()).start();
+        textViewResult.animate().translationY(distance).alpha(1f).setDuration(350).setInterpolator(new android.view.animation.DecelerateInterpolator()).withEndAction(this::resetAfterAnimation).start();
     }
+
     private void resetAfterAnimation() {
         editText.post(() -> {
             editText.setText(textViewResult.getText());
-
             editText.setAlpha(1f);
             editText.setTranslationY(0f);
             editText.setSelection(editText.getText().length());
-
             textViewResult.setAlpha(1f);
             textViewResult.setTranslationY(0f);
         });
     }
 
-
-
     private void adjustTextSize(Editable editable) {
-        // 1. Definir el tamaño máximo (el del XML) y el mínimo (donde empieza el scroll)
-        float maxTextSizeSP = 70f;
-        float minTextSizeSP = 45f; // Cuando llegue a 45sp, dejará de achicarse y hará scroll
-
+        float maxTextSizeSP = 70f, minTextSizeSP = 45f;
         Paint textPaint = editText.getPaint();
-        int maxWidth = editText.getWidth(); // El ancho visible de la pantalla
+        int maxWidth = editText.getWidth();
         if (maxWidth <= 0) return;
-
-        // Calcular cuánto mide el texto actualmente
-        String text = editable.toString();
-        float textWidth = textPaint.measureText(text);
-
+        float textWidth = textPaint.measureText(editable.toString());
         if (textWidth > maxWidth) {
-            // Calcular el nuevo tamaño proporcional
             float newSize = textPaint.getTextSize() * (maxWidth / textWidth);
-
-            // LIMITAR: Si el nuevo tamaño es menor al mínimo, usamos el mínimo
             if (newSize < TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, minTextSizeSP, getResources().getDisplayMetrics())) {
                 editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, minTextSizeSP);
             } else {
                 editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, newSize);
             }
         } else {
-            // Si el texto es corto, volver al tamaño original
             editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, maxTextSizeSP);
         }
     }
@@ -305,14 +325,8 @@ public class MainActivity extends AppCompatActivity {
         int maxWidth = editText.getWidth();
         if (maxWidth <= 0) return;
         int maxDigits = (int) (maxWidth / textPaint.measureText("0"));
-        int currentLength = editable.length();
-
-        if (currentLength <= maxDigits) {
+        if (editable.length() <= maxDigits) {
             restoreOriginalTextSize();
-        } else {
-            float ratio = (float) currentLength / maxDigits;
-            float newTextSize = editText.getTextSize() * ratio;
-            editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, newTextSize);
         }
     }
 
@@ -326,5 +340,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void preventLockScreen() {
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    public void onStateChanged(@NonNull View topSheet, int newState) {}
+
+    @Override
+    public void onSlide(@NonNull View topSheet, float slideOffset) {
+        constraintLayout.setTranslationY(topSheet.getTranslationY() + topSheet.getHeight());
     }
 }

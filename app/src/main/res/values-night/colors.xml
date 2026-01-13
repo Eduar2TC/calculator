@@ -17,6 +17,10 @@
     <color name="dialog_bg_color">#2E383C</color>
     <color name="toolbar_background_color">#232b2e</color>
     <!--Settings activity colors -->
-    <color name="scroll_view_bg_color">#2E383C</color>
+    <color name="scroll_view_bg_color">#232b2e</color> <!-- Consistente con fondo oscuro -->
     <color name="card_view_background_color">#e1ebbb</color>
+    <color name="status_app_bar_background_color">#232b2e</color> <!-- Añadido para status bar oscuro y consistente -->
+    <color name="overflow_menu_item_text_color">#FFFFFF</color>
+    <color name="top_sheet_background_color">#232b2e</color>
+    <color name="top_sheet_handle_color">#FFFFFF</color>
 </resources>

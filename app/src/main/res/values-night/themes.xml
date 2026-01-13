@@ -22,7 +22,7 @@
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- Title text color -->
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:background">@drawable/dialog_bg</item>
+        <item name="android:background">@drawable/bg_dialog</item>
         <item name="color">@color/dialog_bg_color</item>
     </style>
     <!-- Tool bar -->

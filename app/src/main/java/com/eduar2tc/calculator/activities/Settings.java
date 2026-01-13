@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -28,19 +29,9 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
-        Toolbar toolbar = findViewById(R.id.toolbar) ;
-        setSupportActionBar(toolbar);
-
-
+        initToolbar();
         cardViewHibernationConstraint = findViewById(R.id.card_view_hibernation_constraint);
         switchHibernation = findViewById(R.id.hibernation_switch);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.settings);
-            //add icon back button
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24);
-        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -48,6 +39,25 @@ public class Settings extends AppCompatActivity {
             return insets;
         });
         hibernation();
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar) ;
+        setSupportActionBar(toolbar);
+        // Forzar color del título y el icono de navegación en modo día y noche usando solo el color definido
+        int overflowColor = ContextCompat.getColor(this, R.color.overflow_menu_item_text_color);
+        toolbar.setTitleTextColor(overflowColor);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24);
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(overflowColor);
+        }
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.settings);
+            //add icon back button
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_24);
+        }
     }
 
     @Override
