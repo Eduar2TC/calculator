@@ -25,4 +25,8 @@
     <color name="top_sheet_background_color">#232b2e</color>
     <color name="top_sheet_handle_color">#FFFFFF</color>
     <color name="history_divider_color">#37474F</color>
+
+    <!-- Section header colors -->
+    <color name="section_header_background">#00FFFFFF</color>
+    <color name="section_header_text_color">#B0B0B0</color>
 </resources>

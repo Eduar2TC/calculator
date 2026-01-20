@@ -3,10 +3,17 @@ package com.eduar2tc.calculator.model;
 public class Calculation {
     private String expression;
     private String result;
+    private long timestamp;
 
-    public Calculation(String expression, String result) {
+    public Calculation(String expression, String result, long timestamp) {
         this.expression = expression;
         this.result = result;
+        this.timestamp = timestamp;
+    }
+
+    // Compat constructor para seguridad (no usado pero mantiene retrocompatibilidad)
+    public Calculation(String expression, String result) {
+        this(expression, result, System.currentTimeMillis());
     }
 
     public String getExpression() {
@@ -15,5 +22,9 @@ public class Calculation {
 
     public String getResult() {
         return result;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 }

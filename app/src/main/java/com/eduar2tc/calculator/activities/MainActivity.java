@@ -6,13 +6,17 @@ import android.annotation.SuppressLint;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.graphics.Rect;
+import android.os.SystemClock;
+import android.view.MotionEvent;
+import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,11 +35,13 @@ import com.eduar2tc.calculator.adapter.HistoryAdapter;
 import com.eduar2tc.calculator.behavior.TopSheetBehavior;
 import com.eduar2tc.calculator.model.Calculation;
 import com.eduar2tc.calculator.utils.CustomDialog;
+import com.eduar2tc.calculator.utils.HistoryUtils;
 import com.eduar2tc.calculator.utils.InputFormat;
 import com.eduar2tc.calculator.utils.PerformOperations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements TopSheetBehavior.TopSheetCallback {
     private EditText editText;
@@ -62,9 +68,13 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
     private RecyclerView recyclerViewHistory;
     private HistoryAdapter historyAdapter;
     private List<Calculation> calculationHistory;
+    private TextView emptyHistoryMessage;
 
     private float initialTouchY = 0;
     private boolean isDraggingTopSheet = false;
+
+    // Debe coincidir con EXPANDED_HEIGHT_PERCENTAGE en TopSheetBehavior
+    private static final float TOP_SHEET_EXPANDED_PERCENT = 0.6f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,10 +123,88 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
 
     private void initializeHistory(){
         recyclerViewHistory = findViewById(R.id.recyclerViewHistory);
+        emptyHistoryMessage = findViewById(R.id.emptyHistoryMessage);
         calculationHistory = new ArrayList<>();
         historyAdapter = new HistoryAdapter(calculationHistory);
         recyclerViewHistory.setLayoutManager(new LinearLayoutManager(this));
+        // Permitir que RecyclerView mida su contenido cuando tenga pocos items
+        recyclerViewHistory.setHasFixedSize(false);
+        // Desactivar nested scrolling y usar requestDisallowInterceptTouchEvent desde el propio RecyclerView
+        recyclerViewHistory.setNestedScrollingEnabled(false);
+        recyclerViewHistory.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
         recyclerViewHistory.setAdapter(historyAdapter);
+        // OnTouchListener que evita que el parent intercepte el gesto cuando la lista puede desplazarse
+        recyclerViewHistory.setOnTouchListener((v, event) -> {
+            switch (event.getActionMasked()) {
+                case android.view.MotionEvent.ACTION_DOWN:
+                    initialTouchY = event.getY();
+                    // dejar pasar el evento al RecyclerView
+                    break;
+                case android.view.MotionEvent.ACTION_MOVE:
+                    float dy = event.getY() - initialTouchY;
+                    if ((dy < 0 && recyclerViewHistory.canScrollVertically(1)) || (dy > 0 && recyclerViewHistory.canScrollVertically(-1))) {
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                    } else {
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                    }
+                    break;
+                case android.view.MotionEvent.ACTION_UP:
+                case android.view.MotionEvent.ACTION_CANCEL:
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
+            }
+            return false;
+        });
+        refreshHistoryUi();
+    }
+
+    private void refreshHistoryUi() {
+        if (HistoryUtils.isHistoryEmpty(calculationHistory)) {
+            emptyHistoryMessage.setVisibility(View.VISIBLE);
+            recyclerViewHistory.setVisibility(View.GONE);
+        } else {
+            emptyHistoryMessage.setVisibility(View.GONE);
+            recyclerViewHistory.setVisibility(View.VISIBLE);
+            // agrupar y preparar UI items
+            List<com.eduar2tc.calculator.model.HistoryUiItem> uiItems = HistoryUtils.flattenFromCalculations(calculationHistory, Locale.getDefault());
+            historyAdapter.setUiItems(uiItems);
+            recyclerViewHistory.post(() -> {
+                ViewGroup.LayoutParams lp = recyclerViewHistory.getLayoutParams();
+                // calcular altura máxima disponible para la lista basada en el porcentaje de expansión del TopSheet
+                int parentHeight = constraintLayout.getHeight();
+                int expandedVisible = (int) (parentHeight * TOP_SHEET_EXPANDED_PERCENT);
+
+                // restar alturas de elementos no listables dentro del sheet (handle, margins, paddings)
+                int handleHeight = 0;
+                if (topSheet != null) {
+                    View handle = topSheet.findViewById(R.id.topSheetHandle);
+                    if (handle != null) handleHeight = handle.getHeight();
+                }
+
+                // intentar obtener la altura real de un item (si ya fue medido)
+                int perItemPx = 0;
+                if (recyclerViewHistory.getChildCount() > 0) {
+                    perItemPx = recyclerViewHistory.getChildAt(0).getHeight();
+                }
+                if (perItemPx <= 0) {
+                    perItemPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
+                }
+
+                int contentHeight = perItemPx * uiItems.size() + recyclerViewHistory.getPaddingTop() + recyclerViewHistory.getPaddingBottom();
+                int maxListHeight = Math.max(0, expandedVisible - handleHeight - (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics()));
+
+                if (contentHeight > maxListHeight) {
+                    lp.height = maxListHeight;
+                } else {
+                    lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                }
+                recyclerViewHistory.setLayoutParams(lp);
+                // Asegurar que el RecyclerView mida/porte los cambios para que sea scrollable
+                recyclerViewHistory.requestLayout();
+                recyclerViewHistory.invalidate();
+                historyAdapter.notifyDataSetChanged();
+            });
+        }
     }
 
     private void initializeTextViewAndEditText() {
@@ -165,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
         configureTextViewResultListener();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initializeTopSheet() {
         topSheet = findViewById(id.topSheet);
         topSheetBehavior = TopSheetBehavior.from(topSheet);
@@ -174,6 +263,22 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
             public void onGlobalLayout() {
                 topSheet.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 topSheetBehavior.setState(TopSheetBehavior.STATE_COLLAPSED);
+                // Ampliar área táctil del handle (hit invisible) para facilitar el drag
+                View handle = topSheet.findViewById(R.id.topSheetHandle);
+                if (handle != null) {
+                    final View parent = (View) handle.getParent();
+                    parent.post(() -> {
+                        Rect rect = new Rect();
+                        handle.getHitRect(rect);
+                        int extraDp = 20; // ajustar si hace falta
+                        int extraPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, extraDp, getResources().getDisplayMetrics());
+                        rect.top -= extraPx;
+                        rect.bottom += extraPx;
+                        rect.left -= extraPx;
+                        rect.right += extraPx;
+                        parent.setTouchDelegate(new android.view.TouchDelegate(rect, handle));
+                    });
+                }
             }
         });
     }
@@ -186,29 +291,84 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override public void afterTextChanged(Editable s) { handleTextChange(s); }
         });
-        // Permitir drag desde cualquier parte del EditText para controlar el TopSheet
-        editText.setOnTouchListener((v, event) -> {
-            switch (event.getActionMasked()) {
-                case android.view.MotionEvent.ACTION_DOWN:
-                    initialTouchY = event.getRawY();
-                    return false; // Permitir selección de texto
-                case android.view.MotionEvent.ACTION_MOVE:
-                    float dy = event.getRawY() - initialTouchY;
-                    if (Math.abs(dy) > 40) { // Umbral para detectar drag
-                        if (topSheetBehavior != null) {
-                            if (dy > 0) {
-                                // Drag hacia abajo: expandir TopSheet
-                                topSheetBehavior.setState(TopSheetBehavior.STATE_PEEKED);
-                            } else {
-                                // Drag hacia arriba: colapsar TopSheet
-                                topSheetBehavior.setState(TopSheetBehavior.STATE_COLLAPSED);
-                            }
+        // Mantener gestos existentes y permitir arrastre continuo desde EditText tanto en PEEKED como EXPANDED
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            float downX = 0f, downY = 0f, downRawY = 0f;
+            boolean forwarding = false;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (topSheetBehavior == null || topSheet == null) return false;
+                int action = event.getActionMasked();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        downX = event.getX();
+                        downY = event.getY();
+                        downRawY = event.getRawY();
+                        forwarding = false;
+                        return false; // permitir taps/selección inicialmente
+
+                    case MotionEvent.ACTION_MOVE: {
+                        float dyRaw = event.getRawY() - downRawY;
+                        int state = topSheetBehavior.getState();
+                        // comportamiento histórico: umbral reducido (24px) -> setState pero SOLO si estamos COLLAPSED
+                        if (state == TopSheetBehavior.STATE_COLLAPSED && Math.abs(dyRaw) > 24f) {
+                            if (dyRaw > 0) topSheetBehavior.setState(TopSheetBehavior.STATE_PEEKED);
+                            else topSheetBehavior.setState(TopSheetBehavior.STATE_COLLAPSED);
                             return true;
                         }
-                    }
-                    break;
+
+                        // Forward continuous drag when sheet is PEEKED or EXPANDED
+                        if (state == TopSheetBehavior.STATE_PEEKED || state == TopSheetBehavior.STATE_EXPANDED) {
+                            float dx = event.getX() - downX;
+                            float dy = event.getY() - downY;
+                            float slop = ViewConfiguration.get(v.getContext()).getScaledTouchSlop();
+                            // reducir el umbral para iniciar forwarding: movimientos más cortos empiezan a arrastrar
+                            float forwardThreshold = Math.max(1f, slop * 0.15f);
+
+                            if (!forwarding && Math.abs(dyRaw) > forwardThreshold) {
+                                // iniciar forwarding usando la API de coordenadas (más segura)
+                                int[] topLoc = new int[2];
+                                topSheet.getLocationOnScreen(topLoc);
+                                float mappedDownY = event.getRawY() - topLoc[1];
+                                topSheetBehavior.beginForwardDrag(mappedDownY);
+                                // cancelar el touch original del EditText para evitar que procese el gesto
+                                MotionEvent cancel = MotionEvent.obtain(event.getDownTime(), SystemClock.uptimeMillis(), MotionEvent.ACTION_CANCEL, event.getX(), event.getY(), event.getMetaState());
+                                v.dispatchTouchEvent(cancel);
+                                cancel.recycle();
+                                forwarding = true;
+                                // evitar que el parent intercepte mientras reenviamos
+                                v.getParent().requestDisallowInterceptTouchEvent(true);
+                             }
+
+                            if (forwarding) {
+                                int[] topLoc = new int[2];
+                                topSheet.getLocationOnScreen(topLoc);
+                                float mappedY = event.getRawY() - topLoc[1];
+                                topSheetBehavior.updateForwardDrag(mappedY);
+                                return true; // consume while forwarding
+                            }
+                         }
+                         break;
+                     }
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        if (forwarding) {
+                            int[] topLoc = new int[2];
+                            topSheet.getLocationOnScreen(topLoc);
+                            float mappedY = event.getRawY() - topLoc[1];
+                            topSheetBehavior.updateForwardDrag(mappedY);
+                            topSheetBehavior.endForwardDrag();
+                            forwarding = false;
+                            // permitir que el parent vuelva a interceptar eventos
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            return true;
+                        }
+                         break;
+                }
+                return false; // default: let EditText handle taps/selection
             }
-            return false;
         });
     }
 
@@ -275,8 +435,9 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
                 if (validOperation && !textViewResult.getText().toString().isEmpty()) {
                     String expression = editText.getText().toString();
                     String result = textViewResult.getText().toString();
-                    calculationHistory.add(0, new Calculation(expression, result));
-                    historyAdapter.notifyDataSetChanged();
+                    calculationHistory.add(0, new Calculation(expression, result, System.currentTimeMillis()));
+                    // actualizar UI agrupada
+                    refreshHistoryUi();
                     PerformOperations.performEqualOperation(editText, textViewResult);
                     resultAnimation();
                 }
