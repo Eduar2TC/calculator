@@ -8,13 +8,6 @@
     android:paddingTop="4dp"
     android:paddingBottom="4dp">
 
-    <!-- Separador superior -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1.2dp"
-        android:layout_marginBottom="6dp"
-        android:background="@color/history_divider_color" />
-
     <!-- Contenedor de los textos: usamos weights para distribuir espacio vertical -->
     <LinearLayout
         android:layout_width="match_parent"
