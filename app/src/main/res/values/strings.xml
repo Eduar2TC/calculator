@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Calculator</string>
     <string name="item_select_theme">Select theme</string>
     <string name="item_settings">Settings</string>
@@ -127,4 +127,16 @@
     <string name="divide">÷</string>
     <string name="hint_expression">Introduce una expresión</string>
     <string name="hint_result">Resultado</string>
+    <!-- Settings activity strings -->
+    <string name="settings_header_general">General</string>
+    <string name="hibernation">Hibernación</string>
+    <string name="settings_header_behavior">Comportamiento</string>
+    <string name="forwarding_drag">Forwarding (drag)</string>
+    <string name="slop_factor_label">Slop factor (sensibilidad)</string>
+    <string name="slop_value_default">0.50</string>
+    <string name="min_dp_label">Umbral mínimo (dp)</string>
+    <string name="min_dp_value">8 dp</string>
+    <string name="smoothing_label">Smoothing (0..1)</string>
+    <string name="smoothing_value_default">0.85</string>
+    <string name="reset_defaults">Restablecer valores predeterminados</string>
 </resources>

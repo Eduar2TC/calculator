@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Active part: use theme color -->
+    <item android:state_activated="true" android:color="?attr/colorControlActivated" />
+    <item android:state_pressed="true" android:color="?attr/colorControlActivated" />
+    <!-- Default: inactive - a grey (customize in colors.xml if needed) -->
+    <item android:color="#80CCCCCC" />
+</selector>

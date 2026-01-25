@@ -1,4 +1,4 @@
-package com.eduar2tc.calculator.behavior;
+package com.eduar2tc.calculator.ui.behavior;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.VelocityTracker;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import com.eduar2tc.calculator.R;
 import com.google.android.material.R.styleable;
 
@@ -28,12 +29,12 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
     private int mState = STATE_COLLAPSED;
 
     private float mInitialY;
-    // estado al iniciar el forwarded touch (guardar nivel inicial para posible snap)
+    // state when forwarded touch starts (store initial state for possible snap)
     private int mStartState = STATE_COLLAPSED;
-    // translation inicial cuando se inicia un forwarded drag (declarada más abajo para forwarding)
+    // initial translation when a forwarded drag starts (declared below for forwarding)
     private int mTouchSlop;
     private boolean mIsDragging;
-    // tracker para velocidad (usar en decisión por velocidad+distancia)
+    // velocity tracker (used to decide by speed+distance)
     private VelocityTracker mVelocityTracker;
     private static final float FLING_VELOCITY = 1000f; // px/s
 
@@ -46,26 +47,24 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
     private View mHandle;
     private TopSheetCallback mCallback;
 
-    // Referencia al child scrolable (RecyclerView)
+    // Reference to the scrolling child (RecyclerView)
     private WeakReference<View> mScrollingChildRef;
     private boolean mInitialTouchInScrollingChild = false;
 
-    // --- Forwarding control: cuando true, eventos se están reenviando desde otra vista (EditText)
-    // y debemos evitar nested-scrolls del child para que el TopSheet siga el dedo sin rebotes.
+    // --- Forwarding control: when true, events are being forwarded from another view (EditText)
+    // and we must avoid nested-scrolls of the child so the TopSheet follows the finger without bouncing.
     private boolean mForwardingActive = false;
-    // último Y recibido por los eventos reenviados (usar delta incremental)
+    // last Y received by forwarded events (use incremental delta)
     private float mLastForwardedY = Float.NaN;
-    // coordenada Y del primer ACTION_DOWN reenviado (en coordenadas del TopSheet)
+    // Y coordinate of the first ACTION_DOWN forwarded (in TopSheet coordinates)
     private float mForwardStartY = Float.NaN;
-    // timestamp del ACTION_DOWN de forwarding
-    private long mForwardStartTime = 0L;
-    // translation del sheet al iniciar el forwarding
+    // sheet translation when forwarding started
     private float mStartTranslationY = Float.NaN;
-    // animator actual (si hay animación en curso)
+    // current animator (if there is an animation running)
     private ValueAnimator mAnimator = null;
-    // última translation aplicada (para depuración/consistencia)
+    // last applied translation (for debugging/consistency)
     private float mLastAppliedTranslation = Float.NaN;
-    // timestamp (ms) de la última actualización mapeada (para calcular dt y aplicar suavizado condicional)
+    // timestamp (ms) of the last mapped update (to compute dt and apply conditional smoothing)
     private long mLastMappedTime = 0L;
 
     public interface TopSheetCallback {
@@ -111,7 +110,7 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
 
     @Override
     public boolean onInterceptTouchEvent(@NonNull CoordinatorLayout parent, @NonNull V child, @NonNull MotionEvent ev) {
-        // Si hay forwarding activo, NO interceptar: dejamos que solo los eventos reenviados controlen la hoja
+        // If forwarding is active, DO NOT intercept: let only the forwarded events control the sheet
         if (mForwardingActive) return false;
 
         int action = ev.getActionMasked();
@@ -148,7 +147,7 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
 
     @Override
     public boolean onTouchEvent(@NonNull CoordinatorLayout parent, @NonNull V child, @NonNull MotionEvent ev) {
-        // si estamos en forwarding, evitamos procesar los eventos nativos del sheet (evita doble-control)
+        // if we are in forwarding, avoid processing native sheet events (prevents double-control)
         if (mForwardingActive) return false;
         switch (ev.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
@@ -214,7 +213,7 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
     @Override
     public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull V child,
                                   @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
-        // Si hay forwarding activo, ignorar nested pre-scroll para evitar competencia/rebote
+        // If forwarding is active, ignore nested pre-scroll to avoid competition/bounce
         if (mForwardingActive) return;
         if (dy == 0) return;
         if (target != null) {
@@ -229,7 +228,7 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
         float oldY = child.getTranslationY();
         float newY = oldY - dy;
         float clampedY = Math.max(mMinOffset, Math.min(newY, mMaxOffset));
-        float delta = oldY - clampedY; // cuánto del dy fue consumido por mover el sheet
+        float delta = oldY - clampedY; // how much of dy was consumed by moving the sheet
         if (Math.abs(delta) > 0.0f) {
             child.setTranslationY(clampedY);
             dispatchOnSlide(child);
@@ -242,7 +241,7 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull V child,
                                @NonNull View target, int dxConsumed, int dyConsumed,
                                int dxUnconsumed, int dyUnconsumed, int type) {
-        // Ignorar nested scrolls mientras se esté reenviando el gesto
+        // Ignore nested scrolls while forwarding the gesture
         if (mForwardingActive) return;
         Log.d("TopSheetBehavior", "onNestedScroll dyUnconsumed=" + dyUnconsumed);
         if (dyUnconsumed == 0) return;
@@ -283,7 +282,7 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
             targetY = mMinOffset;
         }
 
-        // Cancelar animador previo si existe para evitar que compita con forwarding
+        // Cancel previous animator if present to avoid competing with forwarding
         if (mAnimator != null && mAnimator.isRunning()) {
             mAnimator.cancel();
             mAnimator = null;
@@ -313,9 +312,9 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
     }
 
     /**
-     * Procesa MotionEvents reenviados desde vistas externas (por ejemplo EditText) mapeadas
-     * en coordenadas del TopSheet. Permite que el TopSheet siga el dedo y decida el estado
-     * al soltar.
+     * Processes MotionEvents forwarded from external views (for example EditText) mapped
+     * into TopSheet coordinates. Allows the TopSheet to follow the finger and decide state
+     * on release.
      */
     public boolean onForwardedTouchEvent(@NonNull MotionEvent ev) {
         V child = mViewRef != null ? mViewRef.get() : null;
@@ -324,15 +323,13 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
         int action = ev.getActionMasked();
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
-                // iniciar forwarding (usar coordenadas mapeadas del sender)
+                // start forwarding (use mapped coordinates from the sender)
                 mForwardingActive = true;
                 mForwardStartY = ev.getY();
-                mForwardStartTime = System.currentTimeMillis();
-                mLastForwardedY = mForwardStartY;
                 mStartTranslationY = child.getTranslationY();
                 mStartState = mState;
                 mIsDragging = true;
-                // cancelar animador en curso para que no compita con el dragging
+                // cancel running animator so it does not compete with dragging
                 if (mAnimator != null && mAnimator.isRunning()) {
                     mAnimator.cancel();
                     mAnimator = null;
@@ -342,7 +339,7 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
                 mVelocityTracker.clear();
                 mVelocityTracker.addMovement(ev);
                 mLastAppliedTranslation = mStartTranslationY;
-                // inicializar timestamp para cálculos de dt y suavizado
+                // initialize timestamp for dt and smoothing calculations
                 mLastMappedTime = System.currentTimeMillis();
                 Log.d("TopSheetBehavior", "FDOWN mappedY=" + mForwardStartY + " startTrans=" + mStartTranslationY + " state=" + mState);
                 return true;
@@ -355,17 +352,17 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
                     mIsDragging = true;
                     mStartTranslationY = child.getTranslationY();
                 }
-                // usar desplazamiento absoluto respecto al primer DOWN reenviado (evita acumulación/jitter)
+                // use absolute displacement relative to the first forwarded DOWN (avoids accumulation/jitter)
                 float rawY = ev.getY();
-                float totalDy = rawY - mForwardStartY; // positivo = hacia abajo
+                float totalDy = rawY - mForwardStartY; // positive = down
                 float targetTranslation = mStartTranslationY + totalDy;
                 float clamped = Math.max(mMinOffset, Math.min(targetTranslation, mMaxOffset));
                 float prev = child.getTranslationY();
                 long now = System.currentTimeMillis();
                 long dt = now - mLastMappedTime;
-                // aplicar suavizado condicional sólo para actualizaciones con dt muy pequeño (alta frecuencia)
+                // apply conditional smoothing only for very frequent updates (small dt)
                 if (!Float.isNaN(mLastAppliedTranslation) && dt > 0 && dt < 16) {
-                    final float alpha = 0.85f; // suave pero rápido
+                    final float alpha = 0.85f; // smooth but fast
                     float applied = mLastAppliedTranslation + (clamped - mLastAppliedTranslation) * alpha;
                     child.setTranslationY(applied);
                     mLastAppliedTranslation = applied;
@@ -382,27 +379,16 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL: {
-                float loggedTotalDy = Float.NaN;
                 if (mIsDragging) {
                     float currentY = child.getTranslationY();
-                    float totalDy = currentY - mStartTranslationY; // positivo = hacia abajo
-                    loggedTotalDy = totalDy;
+                    float totalDy = currentY - mStartTranslationY; // positive = down
                     float yvel = 0f;
                     if (mVelocityTracker != null) {
                         mVelocityTracker.computeCurrentVelocity(1000);
                         yvel = mVelocityTracker.getYVelocity();
                     }
 
-                    // fallback: si no hay VelocityTracker o velocidad es 0, estimar por mapped del forwarding
-                    if (Math.abs(yvel) < 1e-3f) {
-                        long dtTotal = mLastMappedTime - mForwardStartTime;
-                        if (dtTotal > 0 && !Float.isNaN(mLastForwardedY) && !Float.isNaN(mForwardStartY)) {
-                            float dy = mLastForwardedY - mForwardStartY; // px
-                            yvel = dy / (dtTotal / 1000f); // px/s
-                        }
-                    }
-
-                    // Si la velocidad es alta, snap por dirección
+                    // If velocity is high, snap by direction
                     if (Math.abs(yvel) > FLING_VELOCITY) {
                         if (yvel > 0) animateToState(child, STATE_EXPANDED);
                         else animateToState(child, STATE_COLLAPSED);
@@ -425,12 +411,11 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
                     }
                 }
 
-                // limpiar estado
+                // clean state
                 mIsDragging = false;
                 mForwardingActive = false;
                 mLastForwardedY = Float.NaN;
                 mForwardStartY = Float.NaN;
-                mForwardStartTime = 0L;
                 mStartTranslationY = Float.NaN;
                 mStartState = STATE_COLLAPSED;
                 if (child.getParent() != null) child.getParent().requestDisallowInterceptTouchEvent(false);
@@ -439,42 +424,35 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
                     mVelocityTracker.recycle();
                     mVelocityTracker = null;
                 }
-                Log.d("TopSheetBehavior", "FEND currentY=" + child.getTranslationY() + " totalDy=" + loggedTotalDy + " stateAfter=" + mState);
+                Log.d("TopSheetBehavior", "FEND currentY=" + child.getTranslationY() + " totalDy=" + (child.getTranslationY()-mStartTranslationY) + " stateAfter=" + mState);
                  return true;
              }
         }
         return false;
     }
 
-    // Exponer estado de forwarding para que otras clases (p. ej. MainActivity) puedan evitar feedback
+    // Expose forwarding state so other classes (e.g. MainActivity) can avoid feedback
     public boolean isForwardingActive() {
         return mForwardingActive;
     }
 
-    // Public API para controlar forwarding mediante coordenadas mapeadas (mappedY = rawY - topLoc[1])
+    // Public API to control forwarding via mapped coordinates (mappedY = rawY - topLoc[1])
     public void beginForwardDrag(float mappedY) {
         V child = mViewRef != null ? mViewRef.get() : null;
         if (child == null) return;
         mForwardingActive = true;
         mForwardStartY = mappedY;
-        mForwardStartTime = System.currentTimeMillis();
-        mLastForwardedY = mappedY;
         mStartTranslationY = child.getTranslationY();
         mStartState = mState;
         mIsDragging = true;
-        // cancelar animador
+        // cancel animator
         if (mAnimator != null && mAnimator.isRunning()) {
             mAnimator.cancel();
             mAnimator = null;
         }
         if (child.getParent() != null) child.getParent().requestDisallowInterceptTouchEvent(true);
-        // Inicializar VelocityTracker para esta ruta de forwarding también (evita recursos sin inicializar y permite detectar flings si se añade movimiento)
-        if (mVelocityTracker == null) {
-            mVelocityTracker = VelocityTracker.obtain();
-            mVelocityTracker.clear();
-        }
         mLastAppliedTranslation = mStartTranslationY;
-        // inicializar timestamp para cálculos de dt y suavizado
+        // initialize timestamp for dt and smoothing
         mLastMappedTime = System.currentTimeMillis();
         Log.d("TopSheetBehavior", "beginForwardDrag mappedY=" + mappedY + " startTrans=" + mStartTranslationY);
     }
@@ -487,11 +465,11 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
         float clamped = Math.max(mMinOffset, Math.min(targetTranslation, mMaxOffset));
         float prev = child.getTranslationY();
 
-        // Aplicar suavizado condicional similar a onForwardedTouchEvent para evitar oscilaciones
+        // Apply conditional smoothing similar to onForwardedTouchEvent to avoid oscillations
         long now = System.currentTimeMillis();
         long dt = now - mLastMappedTime;
         if (!Float.isNaN(mLastAppliedTranslation) && dt > 0 && dt < 32) {
-            final float alpha = 0.9f; // respuesta rápida pero evita jitter
+            final float alpha = 0.9f; // fast response but avoids jitter
             float applied = mLastAppliedTranslation + (clamped - mLastAppliedTranslation) * alpha;
             child.setTranslationY(applied);
             mLastAppliedTranslation = applied;
@@ -502,7 +480,6 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
         mLastMappedTime = now;
 
         dispatchOnSlide(child);
-        mLastForwardedY = mappedY;
         Log.d("TopSheetBehavior", "updateForwardDrag mappedY=" + mappedY + " totalDy=" + totalDy + " prev=" + prev + " applied=" + child.getTranslationY());
     }
 
@@ -515,14 +492,6 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
         if (mVelocityTracker != null) {
             mVelocityTracker.computeCurrentVelocity(1000);
             yvel = mVelocityTracker.getYVelocity();
-        }
-        // fallback: estimar velocidad si VelocityTracker no tiene datos
-        if (Math.abs(yvel) < 1e-3f) {
-            long dtTotal = mLastMappedTime - mForwardStartTime;
-            if (dtTotal > 0 && !Float.isNaN(mLastForwardedY) && !Float.isNaN(mForwardStartY)) {
-                float dy = mLastForwardedY - mForwardStartY; // px
-                yvel = dy / (dtTotal / 1000f); // px/s
-            }
         }
         if (Math.abs(yvel) > FLING_VELOCITY) {
             if (yvel > 0) animateToState(child, STATE_EXPANDED);
@@ -544,12 +513,10 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
                 }
             }
         }
-        // limpiar
+        // clean
         mIsDragging = false;
         mForwardingActive = false;
-        mLastForwardedY = Float.NaN;
         mForwardStartY = Float.NaN;
-        mForwardStartTime = 0L;
         mStartTranslationY = Float.NaN;
         mStartState = STATE_COLLAPSED;
         if (child.getParent() != null) child.getParent().requestDisallowInterceptTouchEvent(false);

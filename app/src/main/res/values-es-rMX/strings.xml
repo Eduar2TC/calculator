@@ -24,9 +24,10 @@
             <h2>Política de Privacidad</h2>
             <p>[Nombre del Individuo o Empresa] construyó la aplicación [Nombre de la Aplicación] como una aplicación [de código abierto | gratuita | freemium | con publicidad | comercial]. Este SERVICIO es proporcionado por [Nombre del Individuo o Empresa] [sin costo] y está destinado para su uso tal como está.</p>
             <p>Esta página se utiliza para informar a los visitantes del sitio web sobre [mis|nuestras] políticas con respecto a la recopilación, uso y divulgación de Información Personal si alguien decide usar [mi|nuestro] Servicio.</p>
-            <p>Si elige usar [mi|nuestro] Servicio, entonces acepta la recopilación y el uso de información en relación con esta política. La Información Personal que [yo|nosotros] recopilamos se utiliza para proporcionar y mejorar el Servicio. [Yo|Nosotros] no utilizaremos ni compartiremos su información con nadie excepto como se describe en esta Política de Privacidad.</p>
-            <p>Los términos utilizados en esta Política de Privacidad tienen los mismos significados que en nuestros Términos y Condiciones, que son accesibles en [Nombre de la Aplicación], a menos que se definan de otra manera en esta Política de Privacidad.</p>
+            <p>Si elige usar [mi|nuestro] Servicio, entonces acepta la recopilación y el uso de información en relación con esta política. La Información Personal que [yo|nosotros] recopilamos se utiliza para proporcionar y mejorar el Servicio. [Yo|Nosotros] no utilizaremos ni compartiremos su información con nadie excepto como se describe en esta Políticas de Privacidad.</p>
+            <p>Los términos utilizados en esta Políticas de Privacidad tienen los mismos significados que en nuestros Términos y Condiciones, que son accesibles en [Nombre de la Aplicación], a menos que se definan de otra manera en esta Políticas de Privacidad.</p>
 
+            <!-- Missing translations required to avoid localization errors -->
             <p><strong>Recopilación y Uso de Información</strong></p>
             <p>Para una mejor experiencia mientras usa nuestro Servicio, [yo|nosotros] podemos requerirle que nos proporcione cierta información de identificación personal, incluyendo pero no limitado a [agregue lo que recopila aquí, por ejemplo, nombre del usuario | dirección | ubicación | fotos]. La información que [yo|nosotros] solicitamos es [retenida en su dispositivo y no es recopilada por [mí|nosotros] de ninguna manera]|[será retenida por nosotros y utilizada como se describe en esta política de privacidad.</p>
             <p>La aplicación utiliza servicios de terceros que pueden recopilar información utilizada para identificarle. [Puede mencionar los servicios de Google aquí y enlazar a la política de privacidad de Google si lo desea].
@@ -38,7 +39,7 @@
             <p>Las cookies son archivos con una pequeña cantidad de datos que se utilizan comúnmente como un identificador único anónimo. Estos son enviados a su navegador desde el sitio web que visita y se almacenan en la memoria interna de su dispositivo.</p>
             <p>!— Verifique si esto es cierto para su aplicación, si no está seguro, simplemente asuma que usa cookies y modifique esta siguiente línea --> Este Servicio no utiliza estas “cookies” explícitamente. Sin embargo, la aplicación puede usar código y bibliotecas de terceros que usan “cookies” para recopilar información y mejorar sus servicios. Usted tiene la opción de aceptar o rechazar estas cookies, y saber cuándo se está enviando una cookie a su dispositivo. Si elige rechazar nuestras cookies, es posible que no pueda usar algunas partes de este Servicio.</p>
 
-            <p><strong>Proveedores de Servicios</strong></p> <!-- Esta parte puede parecer que no es necesaria, pero si usa algún servicio de Google, o cualquier otra biblioteca de terceros, es probable que necesite esto. -->
+            <p><strong>Proveedores de Servicios</strong></p> <!-- This part may seem unnecessary, but if you use any Google service, or any other third-party library, you will likely need it. -->
             <p>[Yo|Nosotros] podemos emplear empresas e individuos de terceros por las siguientes razones:</p>
             <ul>
                 <li>Para facilitar nuestro Servicio;</li>
@@ -68,4 +69,40 @@
         ]]>
     </string>
     <string name="settings">Ajustes</string>
+    <!-- Missing translations required to avoid localization errors -->
+    <string name="enable_or_disable_animations">Habilitar o deshabilitar animaciones</string>
+    <string name="icon_animation">Animación del icono</string>
+    <string name="operator_plus_minus">+/-</string>
+    <string name="zero">0</string>
+    <string name="dot">.</string>
+    <string name="equal">=</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="plus">+</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="minus">-</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="multiply">×</string>
+    <string name="clear">C</string>
+    <string name="percent">%</string>
+    <string name="divide">÷</string>
+    <string name="hint_expression">Introduce una expresión</string>
+    <string name="hint_result">Resultado</string>
+    <!-- Settings activity translations -->
+    <string name="settings_header_general">General</string>
+    <string name="hibernation">Hibernación</string>
+    <string name="settings_header_behavior">Comportamiento</string>
+    <string name="forwarding_drag">Forwarding (arrastre)</string>
+    <string name="slop_factor_label">Factor Slop (sensibilidad)</string>
+    <string name="slop_value_default">0.50</string>
+    <string name="min_dp_label">Umbral mínimo (dp)</string>
+    <string name="min_dp_value">8 dp</string>
+    <string name="smoothing_label">Suavizado (0..1)</string>
+    <string name="smoothing_value_default">0.85</string>
+    <string name="reset_defaults">Restablecer valores predeterminados</string>
 </resources>

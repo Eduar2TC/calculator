@@ -1,4 +1,4 @@
-package com.eduar2tc.calculator;
+package com.eduar2tc.calculator.utils;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -6,7 +6,6 @@ import android.widget.EditText;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 public class DecimalTextWatcher implements TextWatcher {
     private final EditText editText;
@@ -37,7 +36,7 @@ public class DecimalTextWatcher implements TextWatcher {
             int selectionStart = editText.getSelectionStart();
             String cleanString = originalString.replace(",", "");
 
-            // Separar números y operadores con regex
+            // Split numbers and operators using regex
             String[] tokens = cleanString.split("(?<=[+\\-×÷%])|(?=[+\\-×÷%])");
             StringBuilder formattedString = new StringBuilder();
 
@@ -52,7 +51,7 @@ public class DecimalTextWatcher implements TextWatcher {
             String finalString = formattedString.toString();
             editText.setText(finalString);
 
-            // Restaurar cursor ajustando por cambios en longitud
+            // Restore cursor adjusting for length changes
             int diff = finalString.length() - originalString.length();
             int newCursor = Math.max(0, Math.min(finalString.length(), selectionStart + diff));
             editText.setSelection(newCursor);
@@ -67,11 +66,11 @@ public class DecimalTextWatcher implements TextWatcher {
 
     private String formatNumber(String number) {
         if (number.isEmpty() || number.equals("-")) return number;
-        // Si termina en . o .0 o .00 etc, no formatear - devolver tal cual
+        // If it ends with . or .0 or .00 etc, don't fully format - return as is
         if (number.endsWith(".") || number.matches(".*\\.0+$")) {
             return number;
         }
-        // Si termina en punto y no tiene más de uno, conservarlo
+        // If it ends with a dot and has only one dot at end, keep it and format the rest
         if (number.endsWith(".") && number.indexOf('.') == number.length() - 1) {
             try {
                 double parsed = Double.parseDouble(number.substring(0, number.length() - 1));

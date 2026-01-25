@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/buttons_background_color"
-        tools:context=".activities.MainActivity" >
+        tools:context=".ui.activities.MainActivity" >
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/textViewContainer"

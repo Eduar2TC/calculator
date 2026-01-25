@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Calculator" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color -->
-        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimary">@color/text_view_color</item>
         <item name="colorPrimaryVariant">@color/text_view_background_color</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color -->
@@ -27,10 +27,23 @@
     </style>
     <!-- Tool bar -->
     <style name="toolbar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="android:background">@color/toolbar_background_color</item>
+        <item name="android:background">@color/text_view_background_color</item>
     </style>
     <!-- SETTINGS ACTIVITY -->
     <!-- Toolbar style for setting activity -->
-    <style name="AppTheme.Settings" parent="Theme.AppCompat.NoActionBar"></style>
+    <style name="AppTheme.Settings" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/text_view_color</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSurface">@color/scroll_view_bg_color</item>
+        <item name="colorOnSurface">@color/edit_text_color</item>
+        <item name="android:windowBackground">@color/scroll_view_bg_color</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <!-- Mapear colorControlActivated al accent nocturno -->
+        <item name="android:colorControlActivated">@color/settings_accent_color</item>
+        <item name="colorControlActivated">@color/settings_accent_color</item>
+        <!-- Asegurar que los Sliders usen el estilo específico para Settings -->
+        <item name="sliderStyle">@style/Widget.Settings.Slider</item>
+    </style>
 
 </resources>

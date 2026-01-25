@@ -1,4 +1,4 @@
-package com.eduar2tc.calculator.model;
+package com.eduar2tc.calculator.models;
 
 public class Calculation {
     private String expression;

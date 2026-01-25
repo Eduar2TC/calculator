@@ -1,14 +1,13 @@
 package com.eduar2tc.calculator.utils;
 
-import com.eduar2tc.calculator.model.Calculation;
-import com.eduar2tc.calculator.model.HistorySection;
-import com.eduar2tc.calculator.model.HistoryUiItem;
+import com.eduar2tc.calculator.models.Calculation;
+import com.eduar2tc.calculator.models.HistorySection;
+import com.eduar2tc.calculator.models.HistoryUiItem;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +32,7 @@ public class HistoryUtils {
             keyToDate.putIfAbsent(key, d);
         }
 
-        // Obtener claves y ordenarlas por fecha descendente
+        // Get keys and sort them by date descending
         List<String> keys = new ArrayList<>(map.keySet());
         Collections.sort(keys, (a, b) -> {
             Date da = keyToDate.get(a);
@@ -46,38 +45,30 @@ public class HistoryUtils {
         for (String key : keys) {
             List<Calculation> list = map.get(key);
             if (list == null) continue;
-            // ordenar items por timestamp descendente
+            // sort items by timestamp descending
             Collections.sort(list, (a, b) -> Long.compare(b.getTimestamp(), a.getTimestamp()));
-            // convertir key a Date para almacenamiento
+            // convert key to Date for storage
             Date date = keyToDate.get(key);
-            // crear Calendar para obtener year,month,day
+            // create Calendar to get year,month,day
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            // usar un HistorySection que contiene fecha representada como yyyy-MM-dd en el nombre
-            // pero HistorySection espera LocalDate en el original diseño; para compatibilidad sencilla,
-            // usaremos HistorySection date field as java.util.Date by converting the class — but we cannot change the class now.
-            // Instead, we will create a HistorySection with date in ISO string stored in a fake Date via parsing.
-            // To keep it simple, create a HistorySection by parsing the key into a Date and store that Date as time 00:00.
+            // Use a HistorySection that contains a date represented as yyyy-MM-dd in the name
+            // but HistorySection expects LocalDate in the original design; for simple compatibility,
+            // we will not change the model here.
             try {
                 Date parsed = headerParser.parse(key);
-                // We will reuse HistorySection but it stores a java.time.LocalDate; since we previously created HistorySection
-                // with LocalDate, we need to modify HistorySection to store a String or Date. To avoid changing model, we will
-                // instead create a new lightweight HistorySectionCompat class — but simpler: change HistorySection to store String.
+                // NOTE: original comment about model changes removed; keep simple and skip complex model edits
             } catch (Exception ex) {
                 // ignore
             }
-            // For now, create a dummy HistorySection by using a custom constructor is not possible; instead we'll store null and later
-            // convert sections to UI items only, so we can skip creating HistorySection objects and instead create UI items directly.
-            // So we'll build sections as UI items directly below.
+            // For now, skip creating HistorySection objects; callers should use flattenFromCalculations
         }
 
-        // Instead of returning HistorySection (to avoid changing the model), we will build the sections list returned as empty,
-        // and expect callers to use flattenSectionsToUiItems which we will implement to accept the original calculations list.
-        // To keep backward compatibility, we'll return an empty list here and rely on flattenSectionsToUiItemsFromCalculations.
+        // Return empty list to avoid changing models; callers should use flattenFromCalculations
         return new ArrayList<>();
     }
 
-    // Nueva función que genera los HistoryUiItem directamente desde la lista de Calculation
+    // New function that generates HistoryUiItem directly from Calculation list
     public static List<HistoryUiItem> flattenFromCalculations(List<Calculation> items, Locale locale) {
         List<HistoryUiItem> uiItems = new ArrayList<>();
         if (items == null || items.isEmpty()) return uiItems;
@@ -101,7 +92,7 @@ public class HistoryUtils {
         });
 
         SimpleDateFormat headerFormat = new SimpleDateFormat("d MMM yyyy", locale != null ? locale : Locale.getDefault());
-        // Preparar today/yesterday keys
+        // Prepare today/yesterday keys
         Calendar todayCal = Calendar.getInstance();
         String todayKey = keyFormatter.format(todayCal.getTime());
         todayCal.add(Calendar.DAY_OF_MONTH, -1);
@@ -126,14 +117,14 @@ public class HistoryUtils {
         return uiItems;
     }
 
-    // Mantener firma antigua simplificada para compatibilidad, delegando a flattenFromCalculations
+    // Keep old simplified signature for compatibility, delegating to flattenFromCalculations
     public static List<HistoryUiItem> flattenSectionsToUiItems(List<HistorySection> sections, Locale locale) {
-        // Si se invoca con secciones reales (no usadas), convertirlas a UI items
+        // If called with real sections (not used), convert them to UI items
         List<HistoryUiItem> uiItems = new ArrayList<>();
         if (sections == null) return uiItems;
         SimpleDateFormat headerFormat = new SimpleDateFormat("d MMM yyyy", locale != null ? locale : Locale.getDefault());
         for (HistorySection s : sections) {
-            // Construir un Date a partir de la información disponible no soportada — como fallback, usar current date
+            // Build a header from available information — as fallback use current date
             uiItems.add(HistoryUiItem.createHeader(headerFormat.format(new Date())));
             if (s.getItems() != null) {
                 for (Calculation c : s.getItems()) uiItems.add(HistoryUiItem.createRow(c));

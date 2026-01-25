@@ -35,4 +35,10 @@
    <!-- Section header colors -->
    <color name="section_header_background">#00FFFFFF</color>
    <color name="section_header_text_color">#8A8A8A</color>
+    <!-- Accent color for controls in Settings (Light mode) -->
+    <color name="settings_accent_color">#F06457</color>
+    <!-- Inactive track color for the Slider in day mode (softer than the accent) -->
+    <color name="slider_track_inactive">#80B0B0B0</color>
+    <!-- Title color for the Toolbar in Settings (day mode = black) -->
+    <color name="settings_toolbar_title_color">#FF000000</color>
 </resources>

@@ -17,9 +17,9 @@
     <color name="dialog_bg_color">#2E383C</color>
     <color name="toolbar_background_color">#232b2e</color>
     <!--Settings activity colors -->
-    <color name="scroll_view_bg_color">#232b2e</color> <!-- Consistente con fondo oscuro -->
+    <color name="scroll_view_bg_color">#232b2e</color> <!-- Consistent with dark background -->
     <color name="card_view_background_color">#e1ebbb</color>
-    <color name="status_app_bar_background_color">#232b2e</color> <!-- Añadido para status bar oscuro y consistente -->
+    <color name="status_app_bar_background_color">#232b2e</color> <!-- Added for dark status bar consistency -->
     <color name="overflow_menu_item_text_color">#FFFFFF</color>
     <!-- Top sheet colors -->
     <color name="top_sheet_background_color">#232b2e</color>
@@ -29,4 +29,10 @@
     <!-- Section header colors -->
     <color name="section_header_background">#00FFFFFF</color>
     <color name="section_header_text_color">#B0B0B0</color>
+    <!-- Accent color for controls in Settings (Night mode) -->
+    <color name="settings_accent_color">#FFA5C1FF</color>
+    <!-- Inactive track color for the Slider in night mode -->
+    <color name="slider_track_inactive">#50FFFFFF</color>
+    <!-- Title color for the Toolbar in Settings (night mode = white) -->
+    <color name="settings_toolbar_title_color">#FFFFFFFF</color>
 </resources>

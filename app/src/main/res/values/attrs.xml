@@ -1,3 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Attributes declared for compatibility with custom styles used in Settings -->
+    <!-- Prevents linking errors when Widget.Settings.Slider is defined in themes.xml -->
+    <attr name="trackColorActive" format="color" />
+    <attr name="thumbColorActive" format="color" />
+    <attr name="trackHeight" format="dimension" />
+    <attr name="trackColorInactive" format="color" />
+    <attr name="thumbColorInactive" format="color" />
 </resources>

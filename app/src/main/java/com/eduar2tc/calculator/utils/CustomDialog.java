@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatDialog;
 import androidx.core.text.HtmlCompat;
 
 import com.eduar2tc.calculator.R;
+import com.eduar2tc.calculator.ui.activities.SettingsActivity;
 
 import java.util.List;
 import java.util.Objects;
@@ -69,7 +70,7 @@ public class CustomDialog {
                 showPrivacyPolicyDialog(context);
                 break;
             case R.id.settings:
-                Intent intent = new Intent(context, com.eduar2tc.calculator.activities.Settings.class);
+                Intent intent = new Intent(context, SettingsActivity.class);
                 context.startActivity(intent);
                 break;
         }

@@ -1,4 +1,4 @@
-package com.eduar2tc.calculator.adapter;
+package com.eduar2tc.calculator.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eduar2tc.calculator.R;
-import com.eduar2tc.calculator.model.Calculation;
-import com.eduar2tc.calculator.model.HistoryUiItem;
+import com.eduar2tc.calculator.models.Calculation;
+import com.eduar2tc.calculator.models.HistoryUiItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +22,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_ROW = 1;
 
     public HistoryAdapter(List<Calculation> calculations) {
-        // Mantener constructor antiguo para compatibilidad: convertir a items simples
-        // Esto se puede reemplazar por setUiItems desde el Activity/Fragment
+        // Keep old constructor for compatibility: convert to simple items
+        // This can be replaced by setUiItems from the Activity/Fragment
         this.items = new ArrayList<>();
         for (Calculation c : calculations) {
             items.add(HistoryUiItem.createRow(c));

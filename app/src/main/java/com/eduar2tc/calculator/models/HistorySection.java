@@ -1,4 +1,4 @@
-package com.eduar2tc.calculator.model;
+package com.eduar2tc.calculator.models;
 
 import java.time.LocalDate;
 import java.util.List;
