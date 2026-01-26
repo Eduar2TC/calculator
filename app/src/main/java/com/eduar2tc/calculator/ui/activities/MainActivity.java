@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +40,7 @@ import com.eduar2tc.calculator.utils.HistoryUtils;
 import com.eduar2tc.calculator.utils.InputFormat;
 import com.eduar2tc.calculator.utils.PerformOperations;
 import com.eduar2tc.calculator.utils.ForwardingHelper;
+import com.eduar2tc.calculator.viewmodel.HistoryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
     private List<Calculation> calculationHistory;
     private TextView emptyHistoryMessage;
 
+
     private float initialTouchY = 0;
     private boolean isDraggingTopSheet = false;
 
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
 
     // Forwarding helper (moves thresholds and smoothing out of the Activity)
     private ForwardingHelper forwardingHelper;
+    private HistoryViewModel historyVIewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,12 +136,19 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
         calculationHistory = new ArrayList<>();
         historyAdapter = new HistoryAdapter(calculationHistory);
         recyclerViewHistory.setLayoutManager(new LinearLayoutManager(this));
+        // Attach adapter (fixes "No adapter attached; skipping layout")
+        recyclerViewHistory.setAdapter(historyAdapter);
         // Allow RecyclerView to measure its content when it has few items
         recyclerViewHistory.setHasFixedSize(false);
         // Disable nested scrolling and use requestDisallowInterceptTouchEvent from the RecyclerView itself
         recyclerViewHistory.setNestedScrollingEnabled(false);
         recyclerViewHistory.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
-        recyclerViewHistory.setAdapter(historyAdapter);
+        historyVIewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
+        historyVIewModel.getHistory().observe(this, calculations -> {
+            calculationHistory.clear();
+            if (calculations != null) calculationHistory.addAll(calculations);
+            refreshHistoryUi();
+        });
         // OnTouchListener that prevents the parent from intercepting the gesture when the list can scroll
         recyclerViewHistory.setOnTouchListener((v, event) -> {
             switch (event.getActionMasked()) {
@@ -335,7 +346,6 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
                                 int[] topLoc = new int[2];
                                 topSheet.getLocationOnScreen(topLoc);
                                 float mappedDownY = event.getRawY() - topLoc[1];
-                                Log.d("MainActivity", "beginForwardDrag mappedDownY=" + mappedDownY);
                                 topSheetBehavior.beginForwardDrag(mappedDownY);
                                 // cancel the original touch of the EditText to avoid it processing the gesture
                                 MotionEvent cancel = MotionEvent.obtain(event.getDownTime(), SystemClock.uptimeMillis(), MotionEvent.ACTION_CANCEL, event.getX(), event.getY(), event.getMetaState());
@@ -353,7 +363,6 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
                                 topSheet.getLocationOnScreen(topLoc);
                                 float mappedY = event.getRawY() - topLoc[1];
                                 float smoothed = forwardingHelper.smoothMappedY(mappedY);
-                                Log.d("MainActivity", "updateForwardDrag smoothed=" + smoothed + " raw=" + mappedY);
                                 topSheetBehavior.updateForwardDrag(smoothed);
                                 return true; // consume while forwarding
                             }
@@ -368,7 +377,6 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
                             topSheet.getLocationOnScreen(topLoc);
                             float mappedY = event.getRawY() - topLoc[1];
                             float finalSmoothed = forwardingHelper.finalizeAndReset(mappedY);
-                            Log.d("MainActivity", "endForwardDrag finalSmoothed=" + finalSmoothed + " raw=" + mappedY);
                             topSheetBehavior.updateForwardDrag(finalSmoothed);
                             topSheetBehavior.endForwardDrag();
                             forwarding = false;
@@ -447,8 +455,9 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
                 if (validOperation && !textViewResult.getText().toString().isEmpty()) {
                     String expression = editText.getText().toString();
                     String result = textViewResult.getText().toString();
+                    // optimistic UI update: add to local list immediately with known timestamp
                     calculationHistory.add(0, new Calculation(expression, result, System.currentTimeMillis()));
-                    // update grouped UI
+                    historyVIewModel.addCalculation(expression, result, System.currentTimeMillis());
                     refreshHistoryUi();
                     PerformOperations.performEqualOperation(editText, textViewResult);
                     resultAnimation();

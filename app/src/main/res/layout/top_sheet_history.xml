@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/top_sheet_background_color"
     app:behavior_peekHeight="200dp"
-    app:layout_behavior="com.eduar2tc.calculator.behavior.TopSheetBehavior">
+    app:layout_behavior="com.eduar2tc.calculator.ui.behavior.TopSheetBehavior">
 
     <View
         android:id="@+id/topSheetHandle"
