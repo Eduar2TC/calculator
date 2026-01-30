@@ -31,7 +31,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void setUiItems(List<HistoryUiItem> uiItems) {
-        this.items = uiItems != null ? uiItems : new ArrayList<>();
+        this.items.clear();
+        if (uiItems != null) this.items.addAll(uiItems);
         notifyDataSetChanged();
     }
 

@@ -26,10 +26,6 @@ public class HistoryViewModel extends AndroidViewModel {
     public void addCalculation(String expression, String result) {
         repository.insert(new Calculation(expression, result, System.currentTimeMillis()));
     }
-    // Overload that accepts a timestamp so callers can insert with a known timestamp (prevents duplicates / enables optimistic UI)
-    public void addCalculation(String expression, String result, long timestamp) {
-        repository.insert(new Calculation(expression, result, timestamp));
-    }
     public void deleteAll() {
         repository.deleteAll();
     }
