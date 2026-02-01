@@ -91,8 +91,8 @@
     <string name="clear">C</string>
     <string name="percent">%</string>
     <string name="divide">÷</string>
-    <string name="hint_expression">Introduce una expresión</string>
-    <string name="hint_result">Resultado</string>
+    <string name="hint_expression">""</string>
+    <string name="hint_result">""</string>
     <!-- Settings activity translations -->
     <string name="settings_header_general">General</string>
     <string name="hibernation">Hibernación</string>
