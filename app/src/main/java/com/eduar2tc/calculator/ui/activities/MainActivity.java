@@ -34,7 +34,7 @@ import com.eduar2tc.calculator.ui.controllers.HistoryUIController;
 import com.eduar2tc.calculator.ui.controllers.TextSizeController;
 import com.eduar2tc.calculator.ui.controllers.TopSheetController;
 import com.eduar2tc.calculator.ui.validators.OperationValidator;
-import com.eduar2tc.calculator.utils.CustomDialog;
+import com.eduar2tc.calculator.ui.dialogs.CustomDialog;
 import com.eduar2tc.calculator.utils.DecimalTextWatcher;
 import com.eduar2tc.calculator.utils.InputFormat;
 import com.eduar2tc.calculator.utils.PerformOperations;
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
 
     // State
     private boolean validOperation = false;
+    private String lastValidResult = "";
 
     // Operator IDs
     private static final int OPERATOR_BACK = id.operator0;
@@ -191,8 +192,11 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
     }
 
     private void handleTextChange(Editable editable) {
-        OperationValidator.ValidationResult result = OperationValidator.validate(editable);
+        OperationValidator.ValidationResult result = OperationValidator.validate(editable, lastValidResult);
         validOperation = result.isValid;
+        if (result.isValid && result.result != null && !result.result.isEmpty()) {
+            lastValidResult = result.result;
+        }
         textViewResult.setText(result.result != null ? result.result : "");
     }
 
@@ -234,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements TopSheetBehavior.
             historyViewModel.addCalculation(expression, result);
             PerformOperations.performEqualOperation(editText, textViewResult);
             animationController.performResultAnimation();
-            OperationValidator.resetLastValidResult(); //reset last valid result
+            lastValidResult = ""; //reset last valid result
         }
     }
 

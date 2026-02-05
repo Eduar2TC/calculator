@@ -1,4 +1,4 @@
-package com.eduar2tc.calculator.utils;
+package com.eduar2tc.calculator.ui.dialogs;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -27,6 +27,7 @@ import androidx.core.text.HtmlCompat;
 
 import com.eduar2tc.calculator.R;
 import com.eduar2tc.calculator.ui.activities.SettingsActivity;
+import com.eduar2tc.calculator.utils.SharePrefs;
 
 import java.util.List;
 import java.util.Objects;
