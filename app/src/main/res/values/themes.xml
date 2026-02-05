@@ -2,25 +2,27 @@
     <!-- Base application theme. -->
     <style name="Theme.Calculator" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_700</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/text_view_color</item> <!-- strong orange -->
+        <item name="colorPrimaryVariant">@color/text_view_color</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/buttons_operators_top_color</item> <!-- soft orange -->
+        <item name="colorSecondaryVariant">@color/buttons_operators_top_color</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/text_view_background_color</item>
+        <item name="android:statusBarColor">@color/status_app_bar_background_color</item>
+        <!-- Light navigation bar color so icons are visible in day mode -->
+        <item name="android:navigationBarColor">@android:color/white</item>
         <!-- Customize your theme here. -->
-        <item name="android:colorControlNormal">#ff0000</item>
-        <item name="android:colorControlActivated">#ff0000</item>
-        <item name="android:colorControlHighlight">#ff0000</item>
-        <item name="colorAccent">#fff</item>
+        <item name="android:colorControlNormal">@color/text_view_color</item>
+        <item name="android:colorControlActivated">@color/buttons_operators_right_color</item>
+        <item name="android:colorControlHighlight">@color/buttons_operators_top_color</item>
+        <item name="colorAccent">@color/text_view_color</item>
         <!-- Overflow menu -->
         <item name="actionOverflowMenuStyle">@style/overflow_menu</item>
         <item name="toolbarStyle">@style/toolbar</item>
         <item name="actionBarStyle">@style/action_bar</item>
-        <!-- me item text color in overflow menu -->
+        <!-- menu item text color in overflow menu -->
         <item name="android:itemTextAppearance">@style/custom_menu_item</item>
         <!-- overflow icon color -->
         <item name="actionOverflowButtonStyle">@style/overflow_menu_icon</item>
@@ -28,8 +30,47 @@
 
     <!-- SETTINGS ACTIVITY -->
     <!-- Toolbar style for Settings activity -->
-    <style name="AppTheme.Settings" parent="Theme.AppCompat.NoActionBar">
-        <!-- Scroll view background color -->
+    <style name="AppTheme.Settings" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Force Material attributes required so Material components inflate correctly -->
+        <item name="colorPrimary">@color/text_view_color</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Map to the light theme colors: use text_view_background_color/nav_bar_background_color -->
+        <item name="colorSurface">@color/text_view_background_color</item>
+        <item name="colorOnSurface">@color/edit_text_color</item>
+        <!-- Explicit window background: use the custom light background color -->
+        <item name="android:windowBackground">@color/text_view_background_color</item>
+        <!-- Status bar + navigation bar -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/nav_bar_background_color</item>
+        <!-- Ensure activated controls use the settings accent (day/night) -->
+        <item name="android:colorControlActivated">@color/settings_accent_color</item>
+        <item name="colorControlActivated">@color/settings_accent_color</item>
+        <!-- Make Sliders use the specific style for Settings -->
+        <item name="sliderStyle">@style/Widget.Settings.Slider</item>
+        <!-- Map colorSecondary so Material components use the correct accent -->
+        <item name="colorSecondary">@color/settings_accent_color</item>
+        <item name="colorSecondaryVariant">@color/settings_accent_color</item>
+    </style>
+
+    <!-- Overlay specific to the Toolbar in Settings -->
+    <style name="ThemeOverlay.Settings.Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <!-- Force toolbar icons and text to use the specific Settings color (day/night) -->
+        <item name="android:textColorPrimary">@color/settings_toolbar_title_color</item>
+        <item name="titleTextColor">@color/settings_toolbar_title_color</item>
+        <item name="android:drawableTint">@color/settings_toolbar_title_color</item>
+        <item name="android:colorControlNormal">@color/settings_toolbar_title_color</item>
+    </style>
+
+    <!-- Slider style for Settings (uses settings_accent) -->
+    <style name="Widget.Settings.Slider" parent="Widget.MaterialComponents.Slider">
+        <!-- Remove color attributes that are not compatible with the Material version in this project.
+             The color is resolved from the theme (colorControlActivated) and from layout attributes (thumbColor/trackColorActive).
+        -->
+        <item name="trackHeight">4dp</item>
+        <!-- Use correct Material attributes for recent versions -->
+        <item name="thumbColor">@color/slider_thumb_tint</item>
+        <item name="trackColorActive">@color/slider_track_tint</item>
+        <item name="trackColorInactive">?attr/colorOnSurface</item>
     </style>
 
 

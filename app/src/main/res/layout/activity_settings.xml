@@ -1,185 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/status_app_bar_background_color"
-    tools:context=".activities.Settings"
-
-    >
+    android:background="?attr/colorSurface"
+    tools:context=".ui.activities.SettingsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp"
-        android:gravity="center_vertical"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="?attr/homeAsUpIndicator"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="@string/settings"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        android:titleTextColor="@color/settings_toolbar_title_color"
+        android:theme="@style/ThemeOverlay.Settings.Toolbar"
+        app:popupTheme="@style/ThemeOverlay.Settings.Toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/scroll_view_bg_color"
-        android:overScrollMode="always"
-
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_hibernation"
+            <!-- Section header: General -->
+            <TextView
+                android:id="@+id/settings_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true"
+                android:text="@string/settings_header_general"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
 
-                >
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/card_view_hibernation_constraint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/icon_hibernation"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_margin="8dp"
-                        android:contentDescription="Icon"
-                        android:src="@drawable/md_sleep"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/title_hibernation"
-                        android:layout_width="97dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="8dp"
-                        android:text="Hibernation"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@id/subtitle_hibernation"
-                        app:layout_constraintStart_toEndOf="@id/icon_hibernation"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/subtitle_hibernation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Hibernate screen when its not used"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        app:layout_constraintStart_toEndOf="@id/icon_hibernation"
-                        app:layout_constraintTop_toBottomOf="@id/title_hibernation" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/hibernation_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_animation"
+            <!-- Section container: General -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/section_general_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="?attr/colorSurface">
 
-                >
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/card_view_animation_constraint"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                    <ImageView
-                        android:id="@+id/icon_animation"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_margin="8dp"
-                        android:contentDescription="@string/icon_animation"
-                        android:src="@drawable/baseline_animation_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <!-- Hibernation row (uses the existing views/ids) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/hibernation"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/hibernation_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Section header: Behavior -->
+            <TextView
+                android:id="@+id/top_sheet_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_header_behavior"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp" />
+
+            <!-- Section container: Behavior -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/section_comportamiento_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="?attr/colorSurface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
                     <TextView
-                        android:id="@+id/title_animation"
-                        android:layout_width="97dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="8dp"
-                        android:text="Animations"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@id/subtitle_animation"
-                        app:layout_constraintStart_toEndOf="@id/icon_animation"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/forwarding_drag"
+                        android:textSize="16sp"
+                        android:paddingBottom="6dp" />
+
+                    <!-- Slop factor -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/slop_factor_label"
+                        android:textSize="14sp"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <!-- Material Slider for slop factor (0.1 - 2.0, step 0.1) -->
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_slop_factor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        style="@style/Widget.Settings.Slider"
+                        app:thumbColor="?attr/colorControlActivated"
+                        app:trackColorActive="?attr/colorControlActivated"
+                        app:trackColorInactive="@color/slider_track_inactive" />
 
                     <TextView
-                        android:id="@+id/subtitle_animation"
+                        android:id="@+id/tv_slop_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/enable_or_disable_animations"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        app:layout_constraintStart_toEndOf="@id/icon_animation"
-                        app:layout_constraintTop_toBottomOf="@id/title_animation" />
+                        android:text="@string/slop_value_default"
+                        android:layout_gravity="end"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorOnSurface" />
 
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/animation_switch"
+                    <!-- Min DP spacer -->
+                    <View android:layout_width="match_parent" android:layout_height="8dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/min_dp_label"
+                        android:textSize="14sp"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <!-- Material Slider for min dp (0 - 32, step 1) -->
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_min_dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        style="@style/Widget.Settings.Slider"
+                        app:thumbColor="?attr/colorControlActivated"
+                        app:trackColorActive="?attr/colorControlActivated"
+                        app:trackColorInactive="@color/slider_track_inactive" />
+
+                    <TextView
+                        android:id="@+id/tv_min_dp_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        android:text="@string/min_dp_value"
+                        android:layout_gravity="end"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorOnSurface" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!-- Smoothing spacer -->
+                    <View android:layout_width="match_parent" android:layout_height="8dp" />
 
-            </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/smoothing_label"
+                        android:textSize="14sp"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <!-- Material Slider for smoothing (0.0 - 1.0, step 0.05) -->
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_smoothing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        style="@style/Widget.Settings.Slider"
+                        app:thumbColor="?attr/colorControlActivated"
+                        app:trackColorActive="?attr/colorControlActivated"
+                        app:trackColorInactive="@color/slider_track_inactive" />
+
+                    <TextView
+                        android:id="@+id/tv_smoothing_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/smoothing_value_default"
+                        android:layout_gravity="end"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <!-- Reset button inside behavior section -->
+                    <View android:layout_width="match_parent" android:layout_height="12dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_reset_defaults"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reset_defaults"
+                        android:layout_marginTop="8dp"
+                        app:backgroundTint="@color/settings_accent_selector"
+                        android:textColor="?attr/colorOnPrimary" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Bottom spacer -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp" />
+
         </LinearLayout>
+
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

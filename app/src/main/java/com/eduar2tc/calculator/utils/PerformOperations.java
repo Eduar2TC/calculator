@@ -15,8 +15,8 @@ public class PerformOperations {
 
         try {
             String sanitized = expression.replace(",", "")
-                    .replace("×", "*")
-                    .replace("÷", "/");
+                    .replace("\u00d7", "*")
+                    .replace("\u00f7", "/");
 
             MathExpression mathExpression = new MathExpression(sanitized);
             String result = mathExpression.solve();
@@ -60,10 +60,10 @@ public class PerformOperations {
     }
 
     public static boolean containsOperator(String expression) {
-        return expression.matches(".*[+\\-×÷%*].*");
+        return expression.matches(".*[+\\-\u00d7\u00f7%*].*");
     }
 
-    // ESTE ES EL MÉTODO PROBLEMÁTICO - CORREGIDO
+    // THIS METHOD WAS PROBLEMATIC - FIXED
     public static void insertTextAtCursor(EditText editText, String textToInsert) {
         Editable editable = editText.getText();
         if (editable == null) return;
@@ -71,11 +71,11 @@ public class PerformOperations {
         int start = Math.max(editText.getSelectionStart(), 0);
         int end = Math.max(editText.getSelectionEnd(), 0);
 
-        // Insertar el texto
+        // Insert the text
         editable.replace(Math.min(start, end), Math.max(start, end), textToInsert);
 
-        // NO establecer la selección aquí - dejar que el TextWatcher lo maneje
-        // El TextWatcher calculará correctamente la posición después del formateo
+        // DO NOT set the selection here - let the TextWatcher handle it
+        // The TextWatcher will correctly compute the cursor position after formatting
     }
 
     public static void deleteCharAtCursor(EditText editText) {
@@ -84,10 +84,10 @@ public class PerformOperations {
         Editable editable = editText.getText();
         if (start > 0 && start == end) {
             editable.delete(start - 1, start);
-            // NO establecer selección - el TextWatcher lo manejará
+            // DO NOT set selection - the TextWatcher will handle it
         } else if (start != end) {
             editable.delete(start, end);
-            // NO establecer selección - el TextWatcher lo manejará
+            // DO NOT set selection - the TextWatcher will handle it
         }
     }
 
@@ -101,7 +101,7 @@ public class PerformOperations {
     }
 
     private static boolean isOperator(String s) {
-        return s.matches("[+\\-×÷%]");
+        return s.matches("[+\\-\u00d7\u00f7%]");
     }
 
     public static void toggleSign(EditText editText) {

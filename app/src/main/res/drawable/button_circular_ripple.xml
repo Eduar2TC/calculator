@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- 1. ESTADO CUANDO ESTÁ PRESIONADO -->
+    <!-- 1. PRESSED STATE -->
     <item android:state_pressed="true">
-        <!-- Usamos una lista de capas para poner la onda y el borde juntos -->
+        <!-- Use a layer-list to combine ripple and border together -->
         <layer-list>
-            <!-- Capa 1: El fondo del botón -->
+            <!-- Layer 1: Button background -->
             <item>
                 <shape android:shape="rectangle">
                     <solid android:color="@color/buttons_background_color" />
@@ -13,21 +13,21 @@
                 </shape>
             </item>
 
-            <!-- Capa 2: EL BORDE EXTERNO que aparece al presionar -->
+            <!-- Layer 2: Outer border shown when pressed -->
             <item>
                 <shape android:shape="rectangle">
-                    <!-- Esto hace que el shape sea solo un borde -->
+                    <!-- Make the shape just a border -->
                     <solid android:color="@android:color/transparent" />
-                    <!-- Grosor y color del borde -->
+                    <!-- Border thickness and color -->
                     <stroke android:width="2dp" android:color="@android:color/white" />
-                    <!-- Redondeo de las esquinas -->
+                    <!-- Corner radius -->
                     <corners android:radius="12dp" />
                 </shape>
             </item>
 
-            <!-- Capa 3: La animación de la onda (ripple) que se dibuja encima -->
+            <!-- Layer 3: Ripple animation drawn on top -->
             <item>
-                <ripple android:color="#0E166FF7"> <!-- Color de la onda -->
+                <ripple android:color="#0E166FF7"> <!-- Ripple color -->
                     <item android:id="@android:id/mask">
                         <inset
                             android:insetLeft="4dp"
@@ -45,7 +45,7 @@
         </layer-list>
     </item>
 
-    <!-- 2. ESTADO NORMAL (cuando no está presionado) -->
+    <!-- 2. NORMAL STATE -->
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/buttons_background_color" />

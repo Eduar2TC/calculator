@@ -17,13 +17,13 @@
         android:theme="@style/Theme.Calculator"
         tools:targetApi="31">
         <activity
-            android:name=".activities.Settings"
+            android:name=".ui.activities.SettingsActivity"
             android:exported="false"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:theme="@style/AppTheme.Settings"
             />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"
 

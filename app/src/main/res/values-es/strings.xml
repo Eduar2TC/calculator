@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calculadora</string>
+    <string name="item_select_theme">Elegir tema</string>
+    <string name="item_about">Acerca de</string>
+    <string name="item_settings">Ajustes</string>
+    <string name="theme_dialog_title">Elegir tema</string>
+    <string name="theme_dialog_light">Claro</string>
+    <string name="theme_dialog_dark">Obscuro</string>
+    <string name="theme_dialog_cancel">Cancelar</string>
+    <string name="about_dialog_accept">Aceptar</string>
+    <string name="theme_dialog_default">Predeterminado del sistema</string>
+    <string name="privacy_policy_dialog_title">Política de Privacidad </string>
+    <string name="privacy_policy_content"> Esto es cool </string>
+    <string name="privacy_policy_dialog_accept">Aceptar</string>
+    <string name="privacy_policy_dialog_contact">Contacto</string>
+    <string name="privacy_policy_dialog_email_subject">Subject of the email</string>
+    <string name="privacy_policy_dialog_email_body">Cuerpo del email</string>
+    <string name="privacy_policy_app_not_found">App no encontrada</string>
+    <string name="privacy_policy_html"><![CDATA[<html><body><h2>Política de Privacidad</h2></body></html>]]></string>
+
+    <string name="settings">Ajustes</string>
+    <!-- Missing translations required to avoid localization errors -->
+    <string name="enable_or_disable_animations">Habilitar o deshabilitar animaciones</string>
+    <string name="icon_animation">Animación del icono</string>
+    <string name="operator_plus_minus">+/-</string>
+    <string name="zero">0</string>
+    <string name="dot">.</string>
+    <string name="equal">=</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="plus">+</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="minus">-</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="multiply">×</string>
+    <string name="clear">C</string>
+    <string name="percent">%</string>
+    <string name="divide">÷</string>
+    <string name="hint_expression">""</string>
+    <string name="hint_result">""</string>
+    <!-- Settings activity translations -->
+    <string name="settings_header_general">General</string>
+    <string name="hibernation">Hibernación</string>
+    <string name="settings_header_behavior">Comportamiento</string>
+    <string name="forwarding_drag">Forwarding (arrastre)</string>
+    <string name="slop_factor_label">Factor Slop (sensibilidad)</string>
+    <string name="slop_value_default">0.50</string>
+    <string name="min_dp_label">Umbral mínimo (dp)</string>
+    <string name="min_dp_value">8 dp</string>
+    <string name="smoothing_label">Suavizado (0..1)</string>
+    <string name="smoothing_value_default">0.85</string>
+    <string name="reset_defaults">Restablecer valores predeterminados</string>
+</resources>

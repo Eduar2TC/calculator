@@ -1,4 +1,4 @@
-package com.eduar2tc.calculator.utils;
+package com.eduar2tc.calculator.ui.dialogs;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatDialog;
 import androidx.core.text.HtmlCompat;
 
 import com.eduar2tc.calculator.R;
+import com.eduar2tc.calculator.ui.activities.SettingsActivity;
+import com.eduar2tc.calculator.utils.SharePrefs;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,6 +49,15 @@ public class CustomDialog {
         darkRadioButton.setText(R.string.theme_dialog_dark);
         defaultRadioButton = new RadioButton(context);
         defaultRadioButton.setText(R.string.theme_dialog_default);
+        applyRadioButtonTint(context, lightRadioButton, darkRadioButton, defaultRadioButton);  //apply radio button tint
+    }
+    private void applyRadioButtonTint(Context context, RadioButton... radioButtons) {
+        int uiMode = context.getResources().getConfiguration().uiMode;
+        boolean isNightMode = (uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        int color = context.getResources().getColor(isNightMode ? android.R.color.white : android.R.color.black, context.getTheme()); //TODO: cambiar los colores hardcodeados
+        for (RadioButton rb : radioButtons) {
+            rb.setButtonTintList(android.content.res.ColorStateList.valueOf(color));
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -60,7 +71,7 @@ public class CustomDialog {
                 showPrivacyPolicyDialog(context);
                 break;
             case R.id.settings:
-                Intent intent = new Intent(context, com.eduar2tc.calculator.activities.Settings.class);
+                Intent intent = new Intent(context, SettingsActivity.class);
                 context.startActivity(intent);
                 break;
         }
@@ -158,7 +169,7 @@ public class CustomDialog {
 
         // add layout to dialog
         dialog.setContentView(linearLayout);
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(context.getDrawable(R.drawable.dialog_bg));
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(context.getDrawable(R.drawable.bg_dialog));
 
         //set selected radio button based on current system theme
         int uiMode = context.getResources().getConfiguration().uiMode;
@@ -249,7 +260,7 @@ public class CustomDialog {
 
         // Set container layout as the content view of the dialog
         dialog.setContentView(containerLinearLayout);
-        dialog.getWindow().setBackgroundDrawable(context.getDrawable(R.drawable.dialog_bg));
+        dialog.getWindow().setBackgroundDrawable(context.getDrawable(R.drawable.bg_dialog));
 
         dialog.show();
     }
